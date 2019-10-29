@@ -1,23 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Catapult : MonoBehaviour
+public class Catapult : NetworkBehaviour 
 {
+    /*
     public GameObject myBall;
     private GameObject curBall = null;
     private float ballForce = 0f;
     private float originalForce = 0f;
+    */
 
     // Start is called before the first frame update
     void Start()
     {
-        setBall(Instantiate(myBall, transform.Find("Spawn").position, Quaternion.identity));
+        //setBall(Instantiate(myBall, transform.Find("Spawn").position, Quaternion.identity));
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!hasAuthority)
+        {
+            return;
+        }
+
+        /*
         if (Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(Launch());
@@ -26,16 +35,18 @@ public class Catapult : MonoBehaviour
         {
             StartCoroutine(Reel());
         }
+        */
         if (Input.GetKey(KeyCode.D)) {
-            if (transform.parent.rotation.y > -0.60f) {
-                transform.parent.Rotate(0, -1f, 0);
+            if (transform.rotation.y > -0.60f) {
+                transform.Rotate(0, -1f, 0);
             }
         }
         if (Input.GetKey(KeyCode.A)) {
-            if (transform.parent.rotation.y < 0.60f) {
-                transform.parent.Rotate(0, 1f, 0);
+            if (transform.rotation.y < 0.60f) {
+                transform.Rotate(0, 1f, 0);
             }
         }
+        /*
         if (Input.GetKey(KeyCode.W)) {
             if (ballForce < (originalForce * 2)) {
                 ballForce += (originalForce / 100f);
@@ -46,8 +57,10 @@ public class Catapult : MonoBehaviour
                 ballForce -= (originalForce / 100f);
             }
         }
+        */
     }
 
+    /*
     IEnumerator Launch()
     {
         curBall.GetComponent<ConstantForce>().force = new Vector3(0, ballForce, 0);
@@ -71,4 +84,5 @@ public class Catapult : MonoBehaviour
         originalForce = curBall.GetComponent<ConstantForce>().force.y;
         ballForce = originalForce;
     }
+    */
 }
