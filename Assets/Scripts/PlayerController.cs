@@ -29,7 +29,6 @@ public class PlayerController : NetworkBehaviour
     {
         GameObject go = Instantiate(catapultPrefab, this.transform.position, Quaternion.identity);
 
-
         NetworkServer.SpawnWithClientAuthority(go, connectionToClient);
     }
 }
