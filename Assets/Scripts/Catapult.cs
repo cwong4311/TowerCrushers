@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Catapult : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Catapult : MonoBehaviour
     private GameObject curBall = null;
     private float ballForce = 0f;
     private float originalForce = 0f;
+    public Slider slider;
 
     // Start is called before the first frame update
     void Start()
@@ -39,11 +41,13 @@ public class Catapult : MonoBehaviour
         if (Input.GetKey(KeyCode.W)) {
             if (ballForce < (originalForce * 2)) {
                 ballForce += (originalForce / 100f);
+                slider.value = ballForce;
             }
         }
         if (Input.GetKey(KeyCode.S)) {
             if (ballForce > (originalForce / 20)) {
                 ballForce -= (originalForce / 100f);
+                slider.value = ballForce;
             }
         }
     }
