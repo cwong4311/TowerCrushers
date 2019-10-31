@@ -54,11 +54,13 @@ public class Catapult : MonoBehaviour
 
     IEnumerator Launch()
     {
-        curBall.GetComponent<ConstantForce>().force = new Vector3(0, ballForce, 0);
-        GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, -90000f);
-        yield return new WaitForSeconds(.5f);
-        GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0f);
-        curBall = null;
+        if (curBall != null) {
+            curBall.GetComponent<ConstantForce>().force = new Vector3(0, ballForce, 0);
+            GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, -90000f);
+            yield return new WaitForSeconds(.5f);
+            GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0f);
+            curBall = null;
+        }
     }    
 
     IEnumerator Reel()
