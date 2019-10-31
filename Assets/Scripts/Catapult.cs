@@ -12,7 +12,6 @@ public class Catapult : MonoBehaviour
     private GameObject curBall = null;
     private float ballForce = 0f;
     private float originalForce = 0f;
-    public Slider slider;
     private TutorialStage tutorialStage = TutorialStage.RotateLeft;
     private bool isReloading = false;
 
@@ -98,14 +97,12 @@ public class Catapult : MonoBehaviour
             if (Input.GetKey(KeyCode.W)) {
                 if (ballForce < (originalForce * 2)) {
                     ballForce += (originalForce / 100f);
-                    // slider.value = ballForce;
                 }
                 if (tutorialStage == TutorialStage.ForceIncrease) AdvanceTutorialStage();
             }
             if (Input.GetKey(KeyCode.S)) {
                 if (ballForce > (originalForce / 20)) {
                     ballForce -= (originalForce / 100f);
-                    // slider.value = ballForce;
                 }
                 if (tutorialStage == TutorialStage.ForceDecrease) AdvanceTutorialStage();
             }
