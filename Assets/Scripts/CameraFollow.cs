@@ -27,7 +27,8 @@ public class CameraFollow : MonoBehaviour
         transform.position = target.transform.position - (rotation * offset);
 
         transform.LookAt(target.transform);
-        GetComponent<Camera>().fieldOfView = 60 + strength.value * 100;
+        GetComponent<Camera>().fieldOfView = 60 + (strength.value - startingStrength) * 100;
+
         
         
         

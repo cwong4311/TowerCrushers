@@ -76,5 +76,6 @@ public class Catapult : MonoBehaviour
         curBall = newBall;
         originalForce = curBall.GetComponent<ConstantForce>().force.y;
         ballForce = originalForce;
+        slider.value = ballForce;
     }
 }
