@@ -13,6 +13,8 @@ public class Main : MonoBehaviour
     public Canvas p1_buildCanvas;
     public Canvas p1_playCanvas;
     public GameObject p1_selectedTower;
+    public int p1_selectedCost;
+    public int p1_remainingCost;
 
     public Camera p1_playCam;
     public Camera p1_buildCam;
@@ -33,6 +35,9 @@ public class Main : MonoBehaviour
 
         p1_towerNum = 0;
         p2_towerNum = 0;
+
+        p1_selectedCost = 100;
+        p1_remainingCost = 1000;
     }
 
     // Update is called once per frame
@@ -40,18 +45,23 @@ public class Main : MonoBehaviour
     {
         if (phase == "build") {
             if (Input.GetButtonDown("Fire1")) {
-                //Instantiate(p1_selectedTower, Input.mousePosition, Quaternion.identity);
-                // Construct a ray from the current mouse coordinates
-                Ray ray = p1_buildCam.ScreenPointToRay (Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast (ray, out hit, 100)) {
-                    // Create a particle if hit
-                    //Debug.Log(hit.collider.gameObject.tag);
+                     //Instantiate(p1_selectedTower, Input.mousePosition, Quaternion.identity);
+                    // Construct a ray from the current mouse coordinates
+                    Ray ray = p1_buildCam.ScreenPointToRay (Input.mousePosition);
+                    RaycastHit hit;
+                    if (Physics.Raycast (ray, out hit, 100)) {
+                        // Create a tower if hit
+                        //Debug.Log(hit.collider.gameObject.tag);
 
-                    if (hit.collider.gameObject.tag == "BuildArea")
-                        Instantiate (p1_selectedTower, hit.point, transform.rotation);
-                        p1_towerNum ++;
-                }
+                        if (hit.collider.gameObject.tag == "BuildArea")
+                            //if p1 has enough gold left
+                            if (p1_remainingCost >= p1_selectedCost) {
+                                p1_remainingCost -= p1_selectedCost;
+
+                                Instantiate (p1_selectedTower, hit.point, transform.rotation);
+                                p1_towerNum ++;
+                            }
+                    }
             }
         }
 
