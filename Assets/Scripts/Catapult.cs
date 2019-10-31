@@ -13,6 +13,7 @@ public class Catapult : MonoBehaviour
     private float ballForce = 0f;
     private float originalForce = 0f;
     private TutorialStage tutorialStage = TutorialStage.RotateLeft;
+    private bool isReloading = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,7 @@ public class Catapult : MonoBehaviour
             case TutorialStage.Fire:
                 return "Press Space to fire";
             case TutorialStage.Reload:
-                return "Press R to reload the catapult";
+                return "Press R to reload the catapult, you cannot move while reloading";
             case TutorialStage.Goal:
                 return "Destroy the enemy towers!";
             case TutorialStage.Done:
@@ -79,29 +80,32 @@ public class Catapult : MonoBehaviour
             StartCoroutine(Reel());
             if (tutorialStage == TutorialStage.Reload) AdvanceTutorialStage();
         }
-        if (Input.GetKey(KeyCode.D)) {
-            if (transform.parent.rotation.y > -0.60f) {
-                transform.parent.Rotate(0, -1f, 0);
+        if (!isReloading)
+        {
+            if (Input.GetKey(KeyCode.D)) {
+                if (transform.parent.rotation.y > -0.60f) {
+                    transform.parent.Rotate(0, -1f, 0);
+                }
+                if (tutorialStage == TutorialStage.RotateLeft) AdvanceTutorialStage();
             }
-            if (tutorialStage == TutorialStage.RotateLeft) AdvanceTutorialStage();
-        }
-        if (Input.GetKey(KeyCode.A)) {
-            if (transform.parent.rotation.y < 0.60f) {
-                transform.parent.Rotate(0, 1f, 0);
+            if (Input.GetKey(KeyCode.A)) {
+                if (transform.parent.rotation.y < 0.60f) {
+                    transform.parent.Rotate(0, 1f, 0);
+                }
+                if (tutorialStage == TutorialStage.RotateRight) AdvanceTutorialStage();
             }
-            if (tutorialStage == TutorialStage.RotateRight) AdvanceTutorialStage();
-        }
-        if (Input.GetKey(KeyCode.W)) {
-            if (ballForce < (originalForce * 2)) {
-                ballForce += (originalForce / 100f);
+            if (Input.GetKey(KeyCode.W)) {
+                if (ballForce < (originalForce * 2)) {
+                    ballForce += (originalForce / 100f);
+                }
+                if (tutorialStage == TutorialStage.ForceIncrease) AdvanceTutorialStage();
             }
-            if (tutorialStage == TutorialStage.ForceIncrease) AdvanceTutorialStage();
-        }
-        if (Input.GetKey(KeyCode.S)) {
-            if (ballForce > (originalForce / 20)) {
-                ballForce -= (originalForce / 100f);
+            if (Input.GetKey(KeyCode.S)) {
+                if (ballForce > (originalForce / 20)) {
+                    ballForce -= (originalForce / 100f);
+                }
+                if (tutorialStage == TutorialStage.ForceDecrease) AdvanceTutorialStage();
             }
-            if (tutorialStage == TutorialStage.ForceDecrease) AdvanceTutorialStage();
         }
     }
 
@@ -116,11 +120,16 @@ public class Catapult : MonoBehaviour
 
     IEnumerator Reel()
     {
-        GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 10f);
-        yield return new WaitForSeconds(.5f);
-        GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0f);
-        yield return new WaitForSeconds(1.5f);
-        setBall(Instantiate(myBall, transform.Find("Spawn").position, Quaternion.identity));
+        if (!isReloading)
+        {
+            isReloading = true;
+            GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 10f);
+            yield return new WaitForSeconds(.5f);
+            GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0f);
+            yield return new WaitForSeconds(1.5f);
+            setBall(Instantiate(myBall, transform.Find("Spawn").position, Quaternion.identity));
+            isReloading = false;
+        }
     }
 
     private void setBall(GameObject newBall) {
