@@ -88,22 +88,22 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0a34fe6c7591cdf4ba55e3659a5e60e0
+      spriteID: e48dda7b7722a49edae369869750a802
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID:
     vertices: []
-    indices: 
+    indices:
     edges: []
     weights: []
-  spritePackingTag: 
+  spritePackingTag:
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  userData:
+  assetBundleName:
+  assetBundleVariant:

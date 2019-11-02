@@ -131,14 +131,14 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: a2553ddf0c601e547acb637e95f89ea7
+    spriteID: b1d484fd7f61e4685bf9edc6a82426b5
     vertices: []
-    indices: 
+    indices:
     edges: []
     weights: []
-  spritePackingTag: 
+  spritePackingTag:
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  userData:
+  assetBundleName:
+  assetBundleVariant:

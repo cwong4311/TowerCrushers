@@ -2,19 +2,72 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class Catapult : NetworkBehaviour 
 {
+    enum TutorialStage {RotateLeft,RotateRight,ForceIncrease,ForceDecrease,Fire,Reload,Goal,Done};
+
+    public GameObject tutorialText;
     public GameObject myBall;
     public Transform ballSpawn;
     private GameObject curBall = null;
     private float ballForce = 0f;
     private float originalForce = 0f;
+    private TutorialStage tutorialStage = TutorialStage.RotateLeft;
+    private bool isReloading = false;
+    public Slider slider;
 
     // Start is called before the first frame update
     void Start()
     {
         CmdSpawnBall();
+        UpdateTutorialText();
+    }
+
+    private string CalcTutorialText()
+    {
+        switch (tutorialStage)
+        {
+            case TutorialStage.RotateLeft:
+                return "Press D to rotate the catapult to the left";
+            case TutorialStage.RotateRight:
+                return "Press A to rotate the catapult to the right";
+            case TutorialStage.ForceIncrease:
+                return "Press W to increase the force of the catapult";
+            case TutorialStage.ForceDecrease:
+                return "Press S to decrease the force of the catapult";
+            case TutorialStage.Fire:
+                return "Press Space to fire";
+            case TutorialStage.Reload:
+                return "Press R to reload the catapult, you cannot move while reloading";
+            case TutorialStage.Goal:
+                return "Destroy the enemy towers!";
+            case TutorialStage.Done:
+                return "";
+        }
+        return "";
+    }
+    private void UpdateTutorialText()
+    {
+        tutorialText.GetComponent<Text>().text = CalcTutorialText();
+    }
+    private IEnumerator AdvanceTutorialStageCoroutine()
+    {
+        if (tutorialStage < TutorialStage.Done)
+        {
+            tutorialStage = tutorialStage + 1;
+        }
+        UpdateTutorialText();
+        if (tutorialStage == TutorialStage.Goal)
+        {
+            yield return new WaitForSeconds(5);
+            AdvanceTutorialStage();
+        }
+    }
+    private void AdvanceTutorialStage()
+    {
+        StartCoroutine(AdvanceTutorialStageCoroutine());
     }
 
     // Update is called once per frame
@@ -28,29 +81,40 @@ public class Catapult : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             CmdLaunch();
+            if (tutorialStage == TutorialStage.Fire) AdvanceTutorialStage();
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
             CmdReel();
+            if (tutorialStage == TutorialStage.Reload) AdvanceTutorialStage();
         }
-        if (Input.GetKey(KeyCode.D)) {
-            if (transform.rotation.y > -0.60f) {
-                transform.Rotate(0, -1f, 0);
+        if (!isReloading)
+        {
+            if (Input.GetKey(KeyCode.D)) {
+                if (transform.rotation.y > -0.60f) {
+                    transform.Rotate(0, -1f, 0);
+                }
+                if (tutorialStage == TutorialStage.RotateLeft) AdvanceTutorialStage();
             }
-        }
-        if (Input.GetKey(KeyCode.A)) {
-            if (transform.rotation.y < 0.60f) {
-                transform.Rotate(0, 1f, 0);
+            if (Input.GetKey(KeyCode.A)) {
+                if (transform.rotation.y < 0.60f) {
+                    transform.Rotate(0, 1f, 0);
+                }
+                if (tutorialStage == TutorialStage.RotateRight) AdvanceTutorialStage();
             }
-        }
-        if (Input.GetKey(KeyCode.W)) {
-            if (ballForce < (originalForce * 2)) {
-                ballForce += (originalForce / 100f);
+            if (Input.GetKey(KeyCode.W)) {
+                if (ballForce < (originalForce * 2)) {
+                    ballForce += (originalForce / 100f);
+                    slider.value = ballForce;
+                }
+                if (tutorialStage == TutorialStage.ForceIncrease) AdvanceTutorialStage();
             }
-        }
-        if (Input.GetKey(KeyCode.S)) {
-            if (ballForce > (originalForce / 20)) {
-                ballForce -= (originalForce / 100f);
+            if (Input.GetKey(KeyCode.S)) {
+                if (ballForce > (originalForce / 20)) {
+                    ballForce -= (originalForce / 100f);
+                    slider.value = ballForce;
+                }
+                if (tutorialStage == TutorialStage.ForceDecrease) AdvanceTutorialStage();
             }
         }
     }
@@ -69,21 +133,28 @@ public class Catapult : NetworkBehaviour
 
     IEnumerator Launch()
     {
-        RpcChangePivotAngularVelocity(new Vector3(0, 0, -90000f));
-        yield return new WaitForSeconds(.5f);
-        RpcChangePivotAngularVelocity(new Vector3(0, 0, 0f));
+        if (curBall != null)
+        {
+            RpcChangePivotAngularVelocity(new Vector3(0, 0, -90000f));
+            yield return new WaitForSeconds(.5f);
+            RpcChangePivotAngularVelocity(new Vector3(0, 0, 0f));
 
-        curBall = null;
-    }    
+            curBall = null;
+        }
+    }
 
     IEnumerator Reel()
     {
-        RpcChangePivotAngularVelocity(new Vector3(0, 0, 10f));
-        yield return new WaitForSeconds(.5f);
-        RpcChangePivotAngularVelocity(new Vector3(0, 0, 0f));
-        yield return new WaitForSeconds(1.5f);
+        if (!isReloading)
+        {
+            RpcChangePivotAngularVelocity(new Vector3(0, 0, 10f));
+            yield return new WaitForSeconds(.5f);
+            RpcChangePivotAngularVelocity(new Vector3(0, 0, 0f));
+            yield return new WaitForSeconds(1.5f);
 
-        CmdSpawnBall();
+            CmdSpawnBall();
+            isReloading = false;
+        }
     }
 
     [ClientRpc]
@@ -102,5 +173,7 @@ public class Catapult : NetworkBehaviour
         curBall.GetComponent<ConstantForce>().force = new Vector3(0, ballForce, 0);
 
         NetworkServer.Spawn(curBall);
+        ballForce = slider.value;
+        slider.value = ballForce;
     }
 }
