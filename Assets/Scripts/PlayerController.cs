@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class PlayerController : NetworkBehaviour
 {
     public GameObject catapultPrefab;
+    private GameObject cata;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,7 @@ public class PlayerController : NetworkBehaviour
 
         CmdSpawnCatapult();
         // position camera behind catapult
-        Camera.main.transform.position = transform.position + (transform.up * 10) - (transform.right * 10);
+        //Camera.main.transform.position = transform.position + (transform.up * 10) - (transform.right * 10);
     }
 
     // Update is called once per frame
@@ -29,8 +30,7 @@ public class PlayerController : NetworkBehaviour
     [Command]
     void CmdSpawnCatapult()
     {
-        GameObject go = Instantiate(catapultPrefab, transform.position, Quaternion.identity);
-
-        NetworkServer.SpawnWithClientAuthority(go, connectionToClient);
+        cata = Instantiate(catapultPrefab, transform.position, Quaternion.identity);
+        NetworkServer.SpawnWithClientAuthority(cata, connectionToClient);
     }
 }

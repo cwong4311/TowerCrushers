@@ -600,8 +600,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2190d99c48ff5f478254a9fcfe2fa2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialText: {fileID: 0}
   myBall: {fileID: 619260986, guid: 82af5ca6594e68a4ea4b49cd2f36af49, type: 3}
   ballSpawn: {fileID: 7123285677208001760}
+  slider: {fileID: 0}
 --- !u!114 &114206132481311270
 MonoBehaviour:
   m_ObjectHideFlags: 0
