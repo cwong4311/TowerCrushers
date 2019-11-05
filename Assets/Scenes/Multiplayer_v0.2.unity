@@ -236,7 +236,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1347,6 +1347,8 @@ MonoBehaviour:
   m_SpawnPrefabs:
   - {fileID: 1020074010, guid: 32e9b58ca3028e647a7a6037527221f7, type: 3}
   - {fileID: 619260986, guid: 82af5ca6594e68a4ea4b49cd2f36af49, type: 3}
+  - {fileID: 1499661924, guid: 567f0616f0027dc4e8bd034593ca83f1, type: 3}
+  - {fileID: 9049972452035491784, guid: 20a1f6020026431408d31147a5bec8b4, type: 3}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -1513,7 +1515,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &932115168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1752,7 +1754,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1169069630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2110,7 +2112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   my_tower_prefab: {fileID: 1499661924, guid: 567f0616f0027dc4e8bd034593ca83f1, type: 3}
-  GameState: {fileID: 1872704678}
   my_tower_cost: 100
 --- !u!1 &1269379384
 GameObject:
@@ -2145,7 +2146,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2380,7 +2381,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea4c8cea572833408378e2bbcc10049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameState: {fileID: 1872704678}
 --- !u!1 &1356286759
 GameObject:
   m_ObjectHideFlags: 0
@@ -2812,7 +2812,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   my_tower_prefab: {fileID: 9049972452035491784, guid: 20a1f6020026431408d31147a5bec8b4,
     type: 3}
-  GameState: {fileID: 1872704678}
   my_tower_cost: 200
 --- !u!1 &1872704678
 GameObject:

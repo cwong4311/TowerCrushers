@@ -15,8 +15,7 @@ public class CameraControl : MonoBehaviour
     {
         if (!transform.parent.GetComponent<PlayerController>().isLocalPlayer)
         {
-            gameObject.GetComponent<Camera>().enabled = false;
+            GetComponent<Camera>().enabled = false;
         }
-        
     }
 }
