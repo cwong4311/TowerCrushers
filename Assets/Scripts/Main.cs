@@ -19,7 +19,7 @@ public class Main : MonoBehaviour
     public Camera p1_playCam;
     public Camera p1_buildCam;
 
-    public GameObject p1_catapult;
+    //public GameObject p1_catapult;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,7 @@ public class Main : MonoBehaviour
         p1_playCam.gameObject.SetActive(false);
         p1_playCanvas.gameObject.SetActive(false);
 
-        p1_catapult.GetComponentInChildren<Catapult>().enabled = false;
+        //p1_catapult.GetComponentInChildren<Catapult>().enabled = false;
 
         p1_towerNum = 0;
         p2_towerNum = 0;
@@ -73,7 +73,7 @@ public class Main : MonoBehaviour
 
             p2_towerNum = 8;
 
-            p1_catapult.GetComponentInChildren<Catapult>().enabled = true;
+            //p1_catapult.GetComponentInChildren<Catapult>().enabled = true;
 
             phase = "play";
         }

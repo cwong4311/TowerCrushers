@@ -14,9 +14,9 @@ public class Catapult : NetworkBehaviour
     private GameObject curBall = null;
     private float ballForce = 0f;
     private float originalForce = 0f;
-    private TutorialStage tutorialStage = TutorialStage.RotateLeft;
+    //private TutorialStage tutorialStage = TutorialStage.RotateLeft;
     private bool isReloading = false;
-    public Slider slider;
+    //public Slider slider;
     private Quaternion maxRightRot = Quaternion.Euler(0f, -60f, 0f);
     private Quaternion maxLeftRot = Quaternion.Euler(0f, 60f, 0f);
     private readonly float catapultRotStep = 1.0f;
@@ -26,14 +26,15 @@ public class Catapult : NetworkBehaviour
     {
         if (!isServer && hasAuthority) 
         {
-            transform.Rotate(new Vector3(0f, 180f, 0f));
+            transform.Rotate(0f, 180f, 0f);
             maxRightRot *= Quaternion.Euler(0f, 180f, 0f);
             maxLeftRot *= Quaternion.Euler(0f, 180f, 0f);
         }
         CmdSpawnBall();
-        UpdateTutorialText();
+     //   UpdateTutorialText();
     }
 
+    /*
     private string CalcTutorialText()
     {
         switch (tutorialStage)
@@ -74,10 +75,12 @@ public class Catapult : NetworkBehaviour
             AdvanceTutorialStage();
         }
     }
+
     private void AdvanceTutorialStage()
     {
         StartCoroutine(AdvanceTutorialStageCoroutine());
     }
+    */
 
     // Update is called once per frame
     void Update()
@@ -90,39 +93,39 @@ public class Catapult : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             CmdLaunch();
-            if (tutorialStage == TutorialStage.Fire) AdvanceTutorialStage();
+     //       if (tutorialStage == TutorialStage.Fire) AdvanceTutorialStage();
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
             CmdReel();
-            if (tutorialStage == TutorialStage.Reload) AdvanceTutorialStage();
+      //      if (tutorialStage == TutorialStage.Reload) AdvanceTutorialStage();
         }
  //       if (!isReloading)
  //       {
  
             if (Input.GetKey(KeyCode.D)) {
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, maxRightRot, catapultRotStep);
-                if (tutorialStage == TutorialStage.RotateLeft) AdvanceTutorialStage();
+       //         if (tutorialStage == TutorialStage.RotateLeft) AdvanceTutorialStage();
             }
 
             if (Input.GetKey(KeyCode.A)) {
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, maxLeftRot, catapultRotStep);
-                if (tutorialStage == TutorialStage.RotateRight) AdvanceTutorialStage();
+        //        if (tutorialStage == TutorialStage.RotateRight) AdvanceTutorialStage();
             }
 
             if (Input.GetKey(KeyCode.W)) {
                 if (ballForce < (originalForce * 2)) {
                     ballForce += (originalForce / 100f);
-                    slider.value = ballForce;
+                    //slider.value = ballForce;
                 }
-                if (tutorialStage == TutorialStage.ForceIncrease) AdvanceTutorialStage();
+         //       if (tutorialStage == TutorialStage.ForceIncrease) AdvanceTutorialStage();
             }
             if (Input.GetKey(KeyCode.S)) {
                 if (ballForce > (originalForce / 20)) {
                     ballForce -= (originalForce / 100f);
-                    slider.value = ballForce;
+                    //slider.value = ballForce;
                 }
-                if (tutorialStage == TutorialStage.ForceDecrease) AdvanceTutorialStage();
+          //      if (tutorialStage == TutorialStage.ForceDecrease) AdvanceTutorialStage();
             }
  //       }
     }
@@ -177,8 +180,8 @@ public class Catapult : NetworkBehaviour
     void CmdSpawnBall() {
         curBall = Instantiate(myBall, ballSpawn.position, Quaternion.identity);
         originalForce = curBall.GetComponent<ConstantForce>().force.y;
-        ballForce = slider.value;
-        slider.value = ballForce;
+        //ballForce = slider.value;
+        //slider.value = ballForce;
         curBall.GetComponent<ConstantForce>().force = new Vector3(0, ballForce, 0);
 
         NetworkServer.Spawn(curBall);
