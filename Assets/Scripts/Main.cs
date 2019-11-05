@@ -21,6 +21,8 @@ public class Main : MonoBehaviour
 
     public GameObject p1_catapult;
 
+    private Dictionary<GameObject, int> costForTowers;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,7 @@ public class Main : MonoBehaviour
         p1_buildCanvas.gameObject.SetActive(true);
         p1_playCam.gameObject.SetActive(false);
         p1_playCanvas.gameObject.SetActive(false);
+        costForTowers = new Dictionary<GameObject, int>();
 
         p1_catapult.GetComponentInChildren<Catapult>().enabled = false;
 
@@ -58,9 +61,23 @@ public class Main : MonoBehaviour
                             if (p1_remainingCost >= p1_selectedCost) {
                                 p1_remainingCost -= p1_selectedCost;
 
-                                Instantiate (p1_selectedTower, hit.point, transform.rotation);
+                                GameObject newTower = Instantiate (p1_selectedTower, hit.point, transform.rotation);
+                                newTower.tag = p1_selectedTower.tag;
+                                costForTowers.Add(newTower, p1_selectedCost);
                                 p1_towerNum ++;
                             }
+                    }
+            } else if (Input.GetButtonDown("Fire2")) {
+                    Ray ray = p1_buildCam.ScreenPointToRay (Input.mousePosition);
+                    RaycastHit hit;
+                    if (Physics.Raycast (ray, out hit, 100)) {
+                        // Destroy a tower if hit and recover its cost
+                        if (hit.transform.parent != null && costForTowers.ContainsKey(hit.transform.parent.gameObject)) {
+                            Destroy(hit.transform.parent.gameObject);
+                            p1_remainingCost += costForTowers[hit.transform.parent.gameObject];
+                            costForTowers.Remove(hit.transform.parent.gameObject);
+                            p1_towerNum--;
+                        }
                     }
             }
         }
