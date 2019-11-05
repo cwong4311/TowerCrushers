@@ -10,8 +10,8 @@ public class Catapult : MonoBehaviour
     public GameObject tutorialText;
     public GameObject myBall;
     private GameObject curBall = null;
+    private float multiplier = 0f;
     private float ballForce = 0f;
-    private float originalForce = 0f;
     private TutorialStage tutorialStage = TutorialStage.RotateLeft;
     private bool isReloading = false;
     public Slider slider;
@@ -20,7 +20,7 @@ public class Catapult : MonoBehaviour
     void Start()
     {
         UpdateTutorialText();
-        setBall(Instantiate(myBall, transform.Find("Spawn").position, Quaternion.identity));
+        setBall(Instantiate(myBall, transform.Find("Spawn").position, transform.Find("Spawn").rotation));
     }
 
     private string CalcTutorialText()
@@ -84,28 +84,28 @@ public class Catapult : MonoBehaviour
         if (!isReloading)
         {
             if (Input.GetKey(KeyCode.D)) {
-                if (transform.parent.rotation.y > -0.60f) {
+                if (transform.parent.rotation.y > -0.30f) {
                     transform.parent.Rotate(0, -1f, 0);
                 }
                 if (tutorialStage == TutorialStage.RotateLeft) AdvanceTutorialStage();
             }
             if (Input.GetKey(KeyCode.A)) {
-                if (transform.parent.rotation.y < 0.60f) {
+                if (transform.parent.rotation.y < 0.30f) {
                     transform.parent.Rotate(0, 1f, 0);
                 }
                 if (tutorialStage == TutorialStage.RotateRight) AdvanceTutorialStage();
             }
             if (Input.GetKey(KeyCode.W)) {
-                if (ballForce < (originalForce * 2)) {
-                    ballForce += (originalForce / 100f);
-                    slider.value = ballForce;
+                if (multiplier < 3) {
+                    multiplier += 0.01f;
+                    slider.value = multiplier;
                 }
                 if (tutorialStage == TutorialStage.ForceIncrease) AdvanceTutorialStage();
             }
             if (Input.GetKey(KeyCode.S)) {
-                if (ballForce > (originalForce / 20)) {
-                    ballForce -= (originalForce / 100f);
-                    slider.value = ballForce;
+                if (multiplier > 1) {
+                    multiplier -= 0.01f;
+                    slider.value = multiplier;
                 }
                 if (tutorialStage == TutorialStage.ForceDecrease) AdvanceTutorialStage();
             }
@@ -114,10 +114,12 @@ public class Catapult : MonoBehaviour
 
     IEnumerator Launch()
     {
+        Vector3 forward = transform.Find("Spawn").forward;
         if (curBall != null) {
-            curBall.GetComponent<ConstantForce>().force = new Vector3(0, ballForce, 0);
-            GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, -90000f);
-            yield return new WaitForSeconds(.5f);
+            GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, -90f);
+            yield return new WaitForSeconds(.3f);
+            curBall.GetComponent<Rigidbody>().AddForce(forward * multiplier * ballForce, ForceMode.Impulse);
+            yield return new WaitForSeconds(.2f);
             GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0f);
             curBall = null;
         }
@@ -125,22 +127,23 @@ public class Catapult : MonoBehaviour
 
     IEnumerator Reel()
     {
-        if (!isReloading)
+        if (!isReloading && curBall == null)
         {
             isReloading = true;
-            GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 10f);
+            GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 20f);
             yield return new WaitForSeconds(.5f);
             GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, 0f);
             yield return new WaitForSeconds(1.5f);
             setBall(Instantiate(myBall, transform.Find("Spawn").position, Quaternion.identity));
+            yield return new WaitForSeconds(.5f);
             isReloading = false;
         }
     }
 
     private void setBall(GameObject newBall) {
         curBall = newBall;
-        originalForce = curBall.GetComponent<ConstantForce>().force.y;
-        ballForce = slider.value;
-        slider.value = ballForce;
+        //ballForce = curBall.GetComponent<ConstantForce>().force.y;
+        ballForce = 1f;     //Placeholder: Each ball should be different
+        multiplier = slider.value;
     }
 }

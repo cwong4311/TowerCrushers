@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using UnityEngine.SceneManagement;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,12 +11,15 @@ public class Main : MonoBehaviour
     public int p1_towerNum;
     public int p2_towerNum;
 
+    public Canvas p1_menuCanvas;
     public Canvas p1_buildCanvas;
     public Canvas p1_playCanvas;
+    public Canvas p1_resultsCanvas;
     public GameObject p1_selectedTower;
     public int p1_selectedCost;
     public int p1_remainingCost;
 
+    public Camera p1_menuCam;
     public Camera p1_playCam;
     public Camera p1_buildCam;
 
@@ -26,12 +30,16 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        phase = "build";
+        phase = "menu";
 
-        p1_buildCam.gameObject.SetActive(true);
-        p1_buildCanvas.gameObject.SetActive(true);
+        p1_menuCam.gameObject.SetActive(true);
+        p1_menuCanvas.gameObject.SetActive(true);
+        p1_buildCam.gameObject.SetActive(false);
+        p1_buildCanvas.gameObject.SetActive(false);
         p1_playCam.gameObject.SetActive(false);
         p1_playCanvas.gameObject.SetActive(false);
+        p1_resultsCanvas.gameObject.SetActive(false);
+
         costForTowers = new Dictionary<GameObject, int>();
 
         p1_catapult.GetComponentInChildren<Catapult>().enabled = false;
@@ -46,6 +54,20 @@ public class Main : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (phase == "tutorial") {
+            p1_menuCam.gameObject.SetActive(false);
+            p1_menuCanvas.gameObject.SetActive(false);
+            p1_buildCam.gameObject.SetActive(true);
+            p1_buildCanvas.gameObject.SetActive(true);
+
+            phase = "build";
+        }
+        if (phase == "multiplayer") {
+            // Do Multiplayer Stuff
+        }
+        if (phase == "exit") {
+            Application.Quit();
+        }
         if (phase == "build") {
             if (Input.GetButtonDown("Fire1")) {
                      //Instantiate(p1_selectedTower, Input.mousePosition, Quaternion.identity);
@@ -62,7 +84,7 @@ public class Main : MonoBehaviour
                                 p1_remainingCost -= p1_selectedCost;
 
                                 GameObject newTower = Instantiate (p1_selectedTower, hit.point, transform.rotation);
-                                newTower.tag = p1_selectedTower.tag;
+                                newTower.tag = "P1";
                                 costForTowers.Add(newTower, p1_selectedCost);
                                 p1_towerNum ++;
                             }
@@ -96,7 +118,25 @@ public class Main : MonoBehaviour
         }
 
         if (phase == "play") {
-            // Do Nothing for Now
+            p2_towerNum = GameObject.FindGameObjectsWithTag("P2").Length;
+            if (p2_towerNum == 0) {
+                p1_resultsCanvas.gameObject.SetActive(true);
+                p1_resultsCanvas.transform.Find("Win").gameObject.SetActive(true);
+                StartCoroutine(ResetGame());
+            }
+
+            p1_towerNum = GameObject.FindGameObjectsWithTag("P1").Length;
+            if (p1_towerNum == 0) {
+                p1_resultsCanvas.gameObject.SetActive(true);
+                p1_resultsCanvas.transform.Find("Lose").gameObject.SetActive(true);
+                StartCoroutine(ResetGame());
+            }           
         }
+    }
+
+    IEnumerator ResetGame()
+    {
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene("SinglePlayer_v0.9-MenuAndWinLose");
     }
 }

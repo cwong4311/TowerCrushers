@@ -24,7 +24,6 @@ public class Destructible : MonoBehaviour
         {
             Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
             Destroy(col.gameObject);
-            Destroy(gameObject);
         }
     }
 }

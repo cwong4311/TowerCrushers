@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101755561}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5578835, z: -7.119999}
+  m_LocalPosition: {x: 0, y: 1.5578835, z: -6.46}
   m_LocalScale: {x: 5.484926, y: 0.81688064, z: 1.7533528}
   m_Children: []
   m_Father: {fileID: 751687686}
@@ -333,7 +333,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 439519677}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.010002136, y: 1.8599997, z: 3.5199966}
+  m_LocalPosition: {x: 0.010002136, y: 1.8599997, z: 2.9400094}
   m_LocalScale: {x: 5.484926, y: 0.81688064, z: 1.7533528}
   m_Children: []
   m_Father: {fileID: 24978008}
@@ -457,7 +457,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 908155554}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.2300034, y: -0.38211656, z: -7.09}
+  m_LocalPosition: {x: -2.2300034, y: -0.38211656, z: -6.4299974}
   m_LocalScale: {x: 0.88939947, y: 3.1684144, z: 1.7533528}
   m_Children: []
   m_Father: {fileID: 751687686}
@@ -579,7 +579,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1021775967}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.2200012, y: -0.0800004, z: 3.5199966}
+  m_LocalPosition: {x: -2.2200012, y: -0.0800004, z: 2.94}
   m_LocalScale: {x: 0.88939947, y: 3.1684144, z: 1.7533528}
   m_Children: []
   m_Father: {fileID: 24978008}
@@ -761,7 +761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1166480792}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.0900002, y: -0.0800004, z: 3.5199966}
+  m_LocalPosition: {x: 2.0900002, y: -0.0800004, z: 2.9400094}
   m_LocalScale: {x: 0.88939947, y: 3.1684144, z: 1.7533528}
   m_Children: []
   m_Father: {fileID: 24978008}
@@ -1034,7 +1034,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1441809618}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.079998, y: -0.38211656, z: -7.09}
+  m_LocalPosition: {x: 2.079998, y: -0.38211656, z: -6.4299974}
   m_LocalScale: {x: 0.88939947, y: 3.1684144, z: 1.7533528}
   m_Children: []
   m_Father: {fileID: 751687686}
@@ -1289,4 +1289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2190d99c48ff5f478254a9fcfe2fa2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialText: {fileID: 0}
   myBall: {fileID: 0}
+  slider: {fileID: 0}

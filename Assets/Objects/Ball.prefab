@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 619260990}
   - component: {fileID: 619260989}
   - component: {fileID: 619260988}
-  - component: {fileID: 619260987}
+  - component: {fileID: 3811289682311271825}
   m_Layer: 0
-  m_Name: Ball 1
+  m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,15 +124,15 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!75 &619260987
-ConstantForce:
+--- !u!114 &3811289682311271825
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 619260986}
   m_Enabled: 1
-  m_Force: {x: 0, y: 0.4, z: 0}
-  m_RelativeForce: {x: 0, y: 0, z: 0}
-  m_Torque: {x: 0, y: 0, z: 0}
-  m_RelativeTorque: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a7556cffd8c2b4ea72dfbe6442d1e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
