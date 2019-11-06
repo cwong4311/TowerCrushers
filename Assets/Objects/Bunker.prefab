@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 7376756826697609603}
   - component: {fileID: 7376756826697609602}
   - component: {fileID: 7376756826697609601}
-  - component: {fileID: 7376756826697609600}
-  - component: {fileID: 5792554526258206953}
   m_Layer: 0
   m_Name: Wall (21)
   m_TagString: Untagged
@@ -93,36 +91,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7376756826697609600
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756826697609615}
-  serializedVersion: 2
-  m_Mass: 0.01
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &5792554526258206953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756826697609615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0017eb8eb6f5844b5a646e0e4ef1ff9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
-    type: 3}
 --- !u!1 &7376756827288765589
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,8 +103,6 @@ GameObject:
   - component: {fileID: 7376756827288765577}
   - component: {fileID: 7376756827288765576}
   - component: {fileID: 7376756827288765591}
-  - component: {fileID: 7376756827288765590}
-  - component: {fileID: 4348093288897586300}
   m_Layer: 0
   m_Name: Wall (23)
   m_TagString: Untagged
@@ -216,36 +182,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7376756827288765590
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756827288765589}
-  serializedVersion: 2
-  m_Mass: 0.01
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &4348093288897586300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756827288765589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0017eb8eb6f5844b5a646e0e4ef1ff9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
-    type: 3}
 --- !u!1 &7376756827343974884
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,8 +194,6 @@ GameObject:
   - component: {fileID: 7376756827343974936}
   - component: {fileID: 7376756827343974887}
   - component: {fileID: 7376756827343974886}
-  - component: {fileID: 7376756827343974885}
-  - component: {fileID: 7982186427766072130}
   m_Layer: 0
   m_Name: Wall (17)
   m_TagString: Untagged
@@ -339,36 +273,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7376756827343974885
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756827343974884}
-  serializedVersion: 2
-  m_Mass: 0.01
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &7982186427766072130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756827343974884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0017eb8eb6f5844b5a646e0e4ef1ff9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
-    type: 3}
 --- !u!1 &7376756827350565739
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,8 +285,6 @@ GameObject:
   - component: {fileID: 7376756827350565743}
   - component: {fileID: 7376756827350565742}
   - component: {fileID: 7376756827350565741}
-  - component: {fileID: 7376756827350565740}
-  - component: {fileID: 2526169641464548407}
   m_Layer: 0
   m_Name: Wall (19)
   m_TagString: Untagged
@@ -462,36 +364,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7376756827350565740
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756827350565739}
-  serializedVersion: 2
-  m_Mass: 0.01
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &2526169641464548407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756827350565739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0017eb8eb6f5844b5a646e0e4ef1ff9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
-    type: 3}
 --- !u!1 &7376756827692626486
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,8 +376,6 @@ GameObject:
   - component: {fileID: 7376756827692626474}
   - component: {fileID: 7376756827692626473}
   - component: {fileID: 7376756827692626472}
-  - component: {fileID: 7376756827692626487}
-  - component: {fileID: 4861143285352608014}
   m_Layer: 0
   m_Name: Wall (20)
   m_TagString: Untagged
@@ -585,36 +455,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7376756827692626487
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756827692626486}
-  serializedVersion: 2
-  m_Mass: 0.01
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &4861143285352608014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756827692626486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0017eb8eb6f5844b5a646e0e4ef1ff9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
-    type: 3}
 --- !u!1 &7376756827824381278
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,8 +467,6 @@ GameObject:
   - component: {fileID: 7376756827824381266}
   - component: {fileID: 7376756827824381265}
   - component: {fileID: 7376756827824381264}
-  - component: {fileID: 7376756827824381279}
-  - component: {fileID: 5635192599107325638}
   m_Layer: 0
   m_Name: Wall (22)
   m_TagString: Untagged
@@ -708,36 +546,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7376756827824381279
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756827824381278}
-  serializedVersion: 2
-  m_Mass: 0.01
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &5635192599107325638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756827824381278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0017eb8eb6f5844b5a646e0e4ef1ff9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
-    type: 3}
 --- !u!1 &7376756827986412619
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,8 +558,6 @@ GameObject:
   - component: {fileID: 7376756827986412623}
   - component: {fileID: 7376756827986412622}
   - component: {fileID: 7376756827986412621}
-  - component: {fileID: 7376756827986412620}
-  - component: {fileID: 3378923192698792156}
   m_Layer: 0
   m_Name: Wall (16)
   m_TagString: Untagged
@@ -831,36 +637,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7376756827986412620
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756827986412619}
-  serializedVersion: 2
-  m_Mass: 0.01
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &3378923192698792156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756827986412619}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0017eb8eb6f5844b5a646e0e4ef1ff9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
-    type: 3}
 --- !u!1 &7376756828168163547
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,8 +649,6 @@ GameObject:
   - component: {fileID: 7376756828168163551}
   - component: {fileID: 7376756828168163550}
   - component: {fileID: 7376756828168163549}
-  - component: {fileID: 7376756828168163548}
-  - component: {fileID: 3557111370731687438}
   m_Layer: 0
   m_Name: Wall (18)
   m_TagString: Untagged
@@ -954,36 +728,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7376756828168163548
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756828168163547}
-  serializedVersion: 2
-  m_Mass: 0.01
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &3557111370731687438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756828168163547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0017eb8eb6f5844b5a646e0e4ef1ff9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
-    type: 3}
 --- !u!1 &7376756828182652734
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,8 +740,6 @@ GameObject:
   - component: {fileID: 7376756828182652722}
   - component: {fileID: 7376756828182652721}
   - component: {fileID: 7376756828182652720}
-  - component: {fileID: 7376756828182652735}
-  - component: {fileID: 8076533110444439848}
   m_Layer: 0
   m_Name: Wall (24)
   m_TagString: Untagged
@@ -1077,36 +819,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7376756828182652735
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756828182652734}
-  serializedVersion: 2
-  m_Mass: 0.01
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &8076533110444439848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756828182652734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0017eb8eb6f5844b5a646e0e4ef1ff9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
-    type: 3}
 --- !u!1 &7376756828201119265
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,8 +831,6 @@ GameObject:
   - component: {fileID: 7376756828201119269}
   - component: {fileID: 7376756828201119268}
   - component: {fileID: 7376756828201119267}
-  - component: {fileID: 7376756828201119266}
-  - component: {fileID: 4031061819708184510}
   m_Layer: 0
   m_Name: Wall (15)
   m_TagString: Untagged
@@ -1200,36 +910,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7376756828201119266
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756828201119265}
-  serializedVersion: 2
-  m_Mass: 0.01
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &4031061819708184510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376756828201119265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0017eb8eb6f5844b5a646e0e4ef1ff9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
-    type: 3}
 --- !u!1 &9049972452035491784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1241,9 +921,11 @@ GameObject:
   - component: {fileID: 8814183164402328034}
   - component: {fileID: 114131743706075684}
   - component: {fileID: 114278339038174060}
+  - component: {fileID: 4888298255306302753}
+  - component: {fileID: 7236697143940176643}
   m_Layer: 0
   m_Name: Bunker
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1327,3 +1009,34 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!54 &4888298255306302753
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9049972452035491784}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7236697143940176643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9049972452035491784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0017eb8eb6f5844b5a646e0e4ef1ff9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
+    type: 3}
+  gameState: {fileID: 0}

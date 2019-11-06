@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 
 public enum Phases { BUILD, PLAY };
+public enum Modes { SINGLE, MULTI };
 
 public class PlayerController : NetworkBehaviour
 {
@@ -15,7 +16,7 @@ public class PlayerController : NetworkBehaviour
     public int selectedCost;
 
     public int currency = 1000;
-    public Phases phase;
+    public Phases phase = Phases.BUILD;
     public Camera currCam;
     public Canvas buildCanvas;
     public Canvas playCanvas;
@@ -30,8 +31,6 @@ public class PlayerController : NetworkBehaviour
         {
             return;
         }
-
-        phase = Phases.BUILD;
 
         SetBuildCamera();
 
@@ -65,8 +64,7 @@ public class PlayerController : NetworkBehaviour
                         {
                             currency -= selectedCost;
 
-                            CmdSpawnTower(hit.point);
-                            IncTowers();
+                            SpawnTower(hit.point);
                         }
                     }
                 }
@@ -112,6 +110,12 @@ public class PlayerController : NetworkBehaviour
     {
         myCatapult = Instantiate(catapultPrefab, transform.position, Quaternion.identity);
         NetworkServer.SpawnWithClientAuthority(myCatapult, connectionToClient);
+    }
+
+    void SpawnTower(Vector3 pos)
+    {
+        CmdSpawnTower(pos);
+        IncTowers();
     }
 
     [Command]

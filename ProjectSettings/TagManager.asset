@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BuildArea
   - GameState
+  - Tower
   layers:
   - Default
   - TransparentFX

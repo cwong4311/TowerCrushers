@@ -1141,6 +1141,7 @@ MonoBehaviour:
   selectedCost: 100
   currency: 1000
   phase: 0
+  mode: 1
   currCam: {fileID: 7837475247231924519}
   buildCanvas: {fileID: 381248009341798343}
   playCanvas: {fileID: 355736041918990385}

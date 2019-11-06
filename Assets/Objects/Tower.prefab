@@ -1016,7 +1016,7 @@ GameObject:
   - component: {fileID: 54475174024607808}
   m_Layer: 0
   m_Name: Tower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1119,6 +1119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
     type: 3}
+  gameState: {fileID: 0}
 --- !u!54 &54475174024607808
 Rigidbody:
   m_ObjectHideFlags: 0
