@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Explosion : MonoBehaviour
+public class Explosion : NetworkBehaviour 
 {
-    public float explosionSeconds;
+    public float explosionSeconds = 3f;
 
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, explosionSeconds);
+        CmdDestroyExplosion();
     }
 
     // Update is called once per frame
@@ -17,4 +18,17 @@ public class Explosion : MonoBehaviour
     {
         
     }
+
+    [Command]
+    void CmdDestroyExplosion()
+    {
+        StartCoroutine(DestroyWithDelay());
+    }
+
+    IEnumerator DestroyWithDelay()
+    {
+        yield return new WaitForSeconds(explosionSeconds);
+        NetworkServer.Destroy(gameObject);
+    }
+
 }

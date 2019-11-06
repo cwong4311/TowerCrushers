@@ -45,7 +45,6 @@ public class PlayerController : NetworkBehaviour
             if (Input.GetButtonDown("Fire1"))
             {
                 Ray ray = currCam.ScreenPointToRay(Input.mousePosition);
-                Debug.Log(ray);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 100))
                 {
