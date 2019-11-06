@@ -13,13 +13,14 @@ public class Catapult : NetworkBehaviour
     public Transform ballSpawn;
     private GameObject curBall = null;
     private float ballForce = 0f;
-    private float originalForce = 0f;
+    public float multiplier = 2f;
     //private TutorialStage tutorialStage = TutorialStage.RotateLeft;
     private bool isReloading = false;
-    //public Slider slider;
+
     private Quaternion maxRightRot = Quaternion.Euler(0f, -60f, 0f);
     private Quaternion maxLeftRot = Quaternion.Euler(0f, 60f, 0f);
     private readonly float catapultRotStep = 1.0f;
+    private readonly float multiplierStep = 0.01f;
 
     // Start is called before the first frame update
     void Start()
@@ -100,34 +101,33 @@ public class Catapult : NetworkBehaviour
             CmdReel();
       //      if (tutorialStage == TutorialStage.Reload) AdvanceTutorialStage();
         }
- //       if (!isReloading)
- //       {
- 
-            if (Input.GetKey(KeyCode.D)) {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, maxRightRot, catapultRotStep);
-       //         if (tutorialStage == TutorialStage.RotateLeft) AdvanceTutorialStage();
-            }
+        //       if (!isReloading)
+        //       {
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, maxRightRot, catapultRotStep);
+            //         if (tutorialStage == TutorialStage.RotateLeft) AdvanceTutorialStage();
+        }
 
-            if (Input.GetKey(KeyCode.A)) {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, maxLeftRot, catapultRotStep);
-        //        if (tutorialStage == TutorialStage.RotateRight) AdvanceTutorialStage();
-            }
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, maxLeftRot, catapultRotStep);
+            //        if (tutorialStage == TutorialStage.RotateRight) AdvanceTutorialStage();
+        }
 
-            if (Input.GetKey(KeyCode.W)) {
-                if (ballForce < (originalForce * 2)) {
-                    ballForce += (originalForce / 100f);
-                    //slider.value = ballForce;
-                }
-         //       if (tutorialStage == TutorialStage.ForceIncrease) AdvanceTutorialStage();
-            }
-            if (Input.GetKey(KeyCode.S)) {
-                if (ballForce > (originalForce / 20)) {
-                    ballForce -= (originalForce / 100f);
-                    //slider.value = ballForce;
-                }
-          //      if (tutorialStage == TutorialStage.ForceDecrease) AdvanceTutorialStage();
-            }
- //       }
+        /*
+        if (Input.GetKey(KeyCode.W))
+        {
+            Debug.Log("up" + multiplier);
+            //       if (tutorialStage == TutorialStage.ForceIncrease) AdvanceTutorialStage();
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            Debug.Log("down" + multiplier);
+            //      if (tutorialStage == TutorialStage.ForceDecrease) AdvanceTutorialStage();
+        }
+        */
+        //       }
     }
 
     [Command]
@@ -146,8 +146,11 @@ public class Catapult : NetworkBehaviour
     {
         if (curBall != null)
         {
-            RpcChangePivotAngularVelocity(new Vector3(0, 0, -90000f));
-            yield return new WaitForSeconds(.5f);
+            Vector3 forward = ballSpawn.forward;
+            RpcChangePivotAngularVelocity(new Vector3(0, 0, -90f));
+            yield return new WaitForSeconds(.3f);
+            curBall.GetComponent<Rigidbody>().AddForce(forward * multiplier * ballForce, ForceMode.Impulse);
+            yield return new WaitForSeconds(.2f);
             RpcChangePivotAngularVelocity(new Vector3(0, 0, 0f));
 
             curBall = null;
@@ -156,17 +159,17 @@ public class Catapult : NetworkBehaviour
 
     IEnumerator Reel()
     {
-//        if (!isReloading)
-//        {
+        if (!isReloading)
+        {
             isReloading = true;
-            RpcChangePivotAngularVelocity(new Vector3(0, 0, 10f));
+            RpcChangePivotAngularVelocity(new Vector3(0, 0, 20f));
             yield return new WaitForSeconds(.5f);
             RpcChangePivotAngularVelocity(new Vector3(0, 0, 0f));
             yield return new WaitForSeconds(1.5f);
 
             CmdSpawnBall();
             isReloading = false;
-//        }
+        }
     }
 
     [ClientRpc]
@@ -177,12 +180,9 @@ public class Catapult : NetworkBehaviour
     }
 
     [Command]
-    void CmdSpawnBall() {
+    public void CmdSpawnBall() {
         curBall = Instantiate(myBall, ballSpawn.position, Quaternion.identity);
-        originalForce = curBall.GetComponent<ConstantForce>().force.y;
-        //ballForce = slider.value;
-        //slider.value = ballForce;
-        curBall.GetComponent<ConstantForce>().force = new Vector3(0, ballForce, 0);
+        ballForce = 1f;
 
         NetworkServer.Spawn(curBall);
     }

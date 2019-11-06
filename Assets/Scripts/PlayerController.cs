@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 
 public enum Phases { BUILD, PLAY };
 
 public class PlayerController : NetworkBehaviour
 {
+    public GameObject gameState;
     public GameObject catapultPrefab;
+    public GameObject myCatapult;
     public GameObject selectedTower;
     public int selectedCost;
 
@@ -16,19 +19,24 @@ public class PlayerController : NetworkBehaviour
     public Camera currCam;
     public Canvas buildCanvas;
     public Canvas playCanvas;
+    public Slider slider;
 
+    private readonly float multiplierStep = 0.01f;
     // Start is called before the first frame update
     void Start()
     {
+        gameState = GameObject.FindWithTag("GameState");
         if (!isLocalPlayer)
         {
             return;
         }
+
         phase = Phases.BUILD;
 
         SetBuildCamera();
 
         CmdSpawnCatapult();
+        myCatapult.GetComponent<Catapult>().multiplier = slider.value;
     }
 
     // Update is called once per frame
@@ -58,7 +66,7 @@ public class PlayerController : NetworkBehaviour
                             currency -= selectedCost;
 
                             CmdSpawnTower(hit.point);
-                            //p1_towerNum ++;
+                            IncTowers();
                         }
                     }
                 }
@@ -69,6 +77,21 @@ public class PlayerController : NetworkBehaviour
         if (phase == Phases.PLAY)
         {
             SetPlayCamera();
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                if (myCatapult.GetComponent<Catapult>().multiplier < 3)
+                {
+                    myCatapult.GetComponent<Catapult>().multiplier += multiplierStep;
+                }
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                if (myCatapult.GetComponent<Catapult>().multiplier > 1)
+                {
+                    myCatapult.GetComponent<Catapult>().multiplier -= multiplierStep;
+                }
+            }
         }
 
         if (Input.GetKey(KeyCode.P))
@@ -80,13 +103,15 @@ public class PlayerController : NetworkBehaviour
         {
             phase = Phases.BUILD;
         }
+
+        slider.value = myCatapult.GetComponent<Catapult>().multiplier;
     }
 
     [Command]
     void CmdSpawnCatapult()
     {
-        var cata = Instantiate(catapultPrefab, transform.position, Quaternion.identity);
-        NetworkServer.SpawnWithClientAuthority(cata, connectionToClient);
+        myCatapult = Instantiate(catapultPrefab, transform.position, Quaternion.identity);
+        NetworkServer.SpawnWithClientAuthority(myCatapult, connectionToClient);
     }
 
     [Command]
@@ -127,6 +152,29 @@ public class PlayerController : NetworkBehaviour
             // p2 play cam
             currCam.transform.position = new Vector3(208.85f, 15.26f, 365.68f);
             currCam.transform.rotation = Quaternion.Euler(13.871f, 270.729f, 0f);
+        }
+    }
+
+    public void IncTowers()
+    {
+        if (isServer)
+        {
+            CmdIncTowers("p1");
+        } else
+        {
+            CmdIncTowers("p2");
+        }
+    }
+
+    [Command]
+    public void CmdIncTowers(string player)
+    {
+        if (player == "p1")
+        {
+            gameState.GetComponent<Main>().p1_towerNum++;
+        } else if (player == "p2")
+        {
+            gameState.GetComponent<Main>().p2_towerNum++;
         }
     }
 }

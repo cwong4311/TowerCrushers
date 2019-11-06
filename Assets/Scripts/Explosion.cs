@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public class Explosion : NetworkBehaviour 
 {
-    public float explosionSeconds = 3f;
+    private readonly float explosionSeconds = 1f;
 
     // Start is called before the first frame update
     void Start()

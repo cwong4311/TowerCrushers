@@ -547,7 +547,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1020074010}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.008726535, z: 0, w: 0.9999619}
   m_LocalPosition: {x: 63.460564, y: 0.63591665, z: 50.994804}
   m_LocalScale: {x: 0.34635583, y: 0.34635583, z: 0.34635583}
   m_Children:
@@ -603,7 +603,6 @@ MonoBehaviour:
   tutorialText: {fileID: 0}
   myBall: {fileID: 619260986, guid: 82af5ca6594e68a4ea4b49cd2f36af49, type: 3}
   ballSpawn: {fileID: 7123285677208001760}
-  slider: {fileID: 0}
 --- !u!114 &114206132481311270
 MonoBehaviour:
   m_ObjectHideFlags: 0

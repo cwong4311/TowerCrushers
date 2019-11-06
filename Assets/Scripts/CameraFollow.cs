@@ -14,11 +14,16 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         offset = target.transform.position - transform.position;
-        startingStrength = strength.value;
+        //startingStrength = strength.value;
     }
 
     void LateUpdate()
     {
+        if (GetComponentInParent<PlayerController>().phase != Phases.PLAY)
+        {
+            return;
+        }
+
         float currentAngle = transform.eulerAngles.y;
         float desiredAngle = target.transform.eulerAngles.y;
         float angle = Mathf.LerpAngle(currentAngle, desiredAngle, damping);

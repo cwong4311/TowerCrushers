@@ -6,12 +6,12 @@ using UnityEngine.Networking;
 public class Destructible : NetworkBehaviour 
 {
     public GameObject explosion;
-    private readonly float explosionSeconds = 1f;
+    public GameObject gameState;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameState = GameObject.FindWithTag("GameState");
     }
 
     // Update is called once per frame
@@ -35,5 +35,29 @@ public class Destructible : NetworkBehaviour
         NetworkServer.Spawn(boom);
         NetworkServer.Destroy(go); // ball
         NetworkServer.Destroy(gameObject); // tower 
+        DecTowers();
+    }
+
+    public void DecTowers()
+    {
+        if (isServer)
+        {
+            CmdDecTowers("p1");
+        } else
+        {
+            CmdDecTowers("p2");
+        }
+    }
+
+    [Command]
+    public void CmdDecTowers(string player)
+    {
+        if (player == "p1")
+        {
+            gameState.GetComponent<Main>().p1_towerNum--;
+        } else if (player == "p2")
+        {
+            gameState.GetComponent<Main>().p2_towerNum--;
+        }
     }
 }
