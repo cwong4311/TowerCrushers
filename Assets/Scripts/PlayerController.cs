@@ -13,6 +13,7 @@ public class PlayerController : NetworkBehaviour
     public GameObject catapultPrefab;
     public GameObject myCatapult;
     public GameObject selectedTower;
+    public GameObject fireballObj;
     public int selectedCost;
 
     public int currency = 1000;
@@ -103,6 +104,21 @@ public class PlayerController : NetworkBehaviour
         }
 
         slider.value = myCatapult.GetComponent<Catapult>().multiplier;
+    }
+
+    public void ShootFireball(Vector3 origin, Vector3 direction)
+    {
+        Debug.Log("ShootFireball");
+        CmdShootFireball(origin, direction);
+    }
+
+    [Command]
+    void CmdShootFireball(Vector3 origin, Vector3 direction)
+    {
+        // FromToRotation(new Vector3(0, 0, 1), direction)
+        var netFireball = Instantiate(fireballObj, origin, Quaternion.identity);
+        netFireball.GetComponent<ConstantForce>().force = direction.normalized;
+        NetworkServer.Spawn(netFireball);
     }
 
     [Command]

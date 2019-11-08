@@ -5,8 +5,10 @@ using UnityEngine.Networking;
 
 public class Destructible : NetworkBehaviour 
 {
+    public enum DestructibleBy { Ball,Fireball } // what is required to destroy this object
     public GameObject explosion;
     public GameObject gameState;
+    public DestructibleBy destructibleBy;
 
     // Start is called before the first frame update
     void Start()
@@ -22,9 +24,19 @@ public class Destructible : NetworkBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.name == "Ball" || col.gameObject.name == "Ball(Clone)")
+        if (destructibleBy <= DestructibleBy.Ball)
         {
-            CmdDestroyTower(col.gameObject);
+            if (col.gameObject.name == "Ball" || col.gameObject.name == "Ball(Clone)")
+            {
+                CmdDestroyTower(col.gameObject);
+            }
+        }
+        if (destructibleBy <= DestructibleBy.Fireball)
+        {
+            if (col.gameObject.name == "Fireball")
+            {
+                CmdDestroyTower(col.gameObject);
+            }
         }
     }
 
