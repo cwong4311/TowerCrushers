@@ -166,8 +166,8 @@ public class Catapult : NetworkBehaviour
             yield return new WaitForSeconds(.5f);
             RpcChangePivotAngularVelocity(new Vector3(0, 0, 0f));
             yield return new WaitForSeconds(1.5f);
-
             CmdSpawnBall();
+            yield return new WaitForSeconds(.5f);
             isReloading = false;
         }
     }
