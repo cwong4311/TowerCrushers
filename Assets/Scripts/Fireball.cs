@@ -56,17 +56,10 @@ public class Fireball : MonoBehaviour
     bool GetHitPosition(out Vector3 hitPos)
     {
         // https://docs.unity3d.com/Manual/CameraRays.html
-        RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-        Debug.Log("FIREBALL");
-        if (Physics.Raycast(ray, out hit))
-        {
-            Debug.Log("FIREBALL " + hit.transform.position.ToString());
-            hitPos = hit.transform.position;
-            return true;
-        }
-        hitPos = new Vector3();
-        return false;
+        hitPos = ray.GetPoint(40);
+        return true;
+
     }
 
     // Update is called once per frame

@@ -108,8 +108,7 @@ public class PlayerController : NetworkBehaviour
 
     public void ShootFireball(Vector3 origin, Vector3 direction)
     {
-        Debug.Log("ShootFireball");
-        CmdShootFireball(origin, direction);
+        CmdShootFireball(currCam.transform.position, direction);
     }
 
     [Command]
@@ -117,7 +116,7 @@ public class PlayerController : NetworkBehaviour
     {
         // FromToRotation(new Vector3(0, 0, 1), direction)
         var netFireball = Instantiate(fireballObj, origin, Quaternion.identity);
-        netFireball.GetComponent<ConstantForce>().force = direction.normalized;
+        netFireball.GetComponent<ConstantForce>().force = direction;
         NetworkServer.Spawn(netFireball);
     }
 
