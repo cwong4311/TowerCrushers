@@ -150,8 +150,9 @@ public class PlayerController : NetworkBehaviour
     [Command]
     void CmdShootFireball(Vector3 origin, Vector3 direction)
     {
+        Quaternion shootRotation = Quaternion.LookRotation(direction, Vector3.up);
         // FromToRotation(new Vector3(0, 0, 1), direction)
-        var netFireball = Instantiate(fireballObj, origin, Quaternion.identity);
+        var netFireball = Instantiate(fireballObj, origin, shootRotation);
         netFireball.GetComponent<ConstantForce>().force = direction;
         NetworkServer.SpawnWithClientAuthority(netFireball, connectionToClient);
     }
