@@ -19,8 +19,11 @@ public class Catapult : NetworkBehaviour
 
     private Quaternion maxRightRot = Quaternion.Euler(0f, -60f, 0f);
     private Quaternion maxLeftRot = Quaternion.Euler(0f, 60f, 0f);
+    private float catapult_force = -90f;
+    private float catapult_reel = 20f;
     private readonly float catapultRotStep = 1.0f;
     private readonly float multiplierStep = 0.01f;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -147,7 +150,9 @@ public class Catapult : NetworkBehaviour
         if (curBall != null)
         {
             Vector3 forward = ballSpawn.forward;
-            RpcChangePivotAngularVelocity(new Vector3(0, 0, -90f));
+            float z = Mathf.Sign(ballSpawn.right.x);
+            RpcChangePivotAngularVelocity(new Vector3(0, 0, z * catapult_force));
+            Debug.Log(z);
             yield return new WaitForSeconds(.3f);
             curBall.GetComponent<Rigidbody>().AddForce(forward * multiplier * ballForce, ForceMode.Impulse);
             yield return new WaitForSeconds(.2f);
@@ -161,8 +166,10 @@ public class Catapult : NetworkBehaviour
     {
         if (!isReloading)
         {
+            float z = Mathf.Sign(ballSpawn.right.x) * -1;
             isReloading = true;
-            RpcChangePivotAngularVelocity(new Vector3(0, 0, 20f));
+            RpcChangePivotAngularVelocity(new Vector3(0, 0, z * catapult_reel));
+            Debug.Log(z);
             yield return new WaitForSeconds(.5f);
             RpcChangePivotAngularVelocity(new Vector3(0, 0, 0f));
             yield return new WaitForSeconds(1.5f);

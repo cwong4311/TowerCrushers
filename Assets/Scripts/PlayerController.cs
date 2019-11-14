@@ -82,15 +82,17 @@ public class PlayerController : NetworkBehaviour
 
             if (Input.GetKey(KeyCode.W))
             {
-                if (myCatapult.GetComponent<Catapult>().multiplier < 3)
+                if (myCatapult.GetComponent<Catapult>().multiplier < 4)
                 {
-                    myCatapult.GetComponent<Catapult>().multiplier += multiplierStep;
+                    IncForce(multiplierStep);                                           //Server increment
+                    myCatapult.GetComponent<Catapult>().multiplier += multiplierStep;   //Local Increment
                 }
             }
             if (Input.GetKey(KeyCode.S))
             {
                 if (myCatapult.GetComponent<Catapult>().multiplier > 1)
                 {
+                    IncForce(-multiplierStep);
                     myCatapult.GetComponent<Catapult>().multiplier -= multiplierStep;
                 }
             }
@@ -192,6 +194,16 @@ public class PlayerController : NetworkBehaviour
             currCam.transform.position = new Vector3(208.85f, 15.26f, 365.68f);
             currCam.transform.rotation = Quaternion.Euler(13.871f, 270.729f, 0f);
         }
+    }
+
+    void IncForce(float increment) {
+        CmdIncForce(increment);
+    }
+
+    [Command]
+    void CmdIncForce(float increment)
+    {
+        myCatapult.GetComponent<Catapult>().multiplier += increment;
     }
 
     public void IncTowers()
