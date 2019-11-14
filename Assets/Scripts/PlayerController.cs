@@ -23,6 +23,9 @@ public class PlayerController : NetworkBehaviour
     public Canvas playCanvas;
     public Slider slider;
 
+    public float nextFireBall = 0;
+    public float fireballCooldown = 10;
+
     private readonly float multiplierStep = 0.01f;
     // Start is called before the first frame update
     void Start()
@@ -108,7 +111,14 @@ public class PlayerController : NetworkBehaviour
 
     public void ShootFireball(Vector3 origin, Vector3 direction)
     {
-        CmdShootFireball(currCam.transform.position, direction);
+        if (Time.time > nextFireBall)
+        {
+            CmdShootFireball(currCam.transform.position, direction);
+            nextFireBall = Time.time + fireballCooldown;
+        } else
+        {
+            Debug.Log("cooldown");
+        }
     }
 
     [Command]
