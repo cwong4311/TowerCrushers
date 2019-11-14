@@ -13,6 +13,7 @@ public class Invincibility : MonoBehaviour
     public bool isInvincible = false;
     public float nextInvincibility = 0;
     public float invincibilityCooldown = 30;
+    public float invincibilityDuration = 3; //invuln is broken, lOl
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +21,7 @@ public class Invincibility : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(TaskOnClick);
         originalButtonColorBlock = GetComponent<Button>().colors;
         greenButtonColorBlock = GetComponent<Button>().colors;
-        greenButtonColorBlock.normalColor = Color.green;
-        greenButtonColorBlock.highlightedColor = Color.green;
+        greenButtonColorBlock.disabledColor = new Color(0f, 0.90f, 0.1f, 0.50f);
     }
 
 
@@ -38,13 +38,14 @@ public class Invincibility : MonoBehaviour
             GetComponentInParent<PlayerController>().CmdActivateInvincibility();
             nextInvincibility = Time.time + invincibilityCooldown;
             isInvincible = true;
+            GetComponent<Button>().interactable = false;
         }
 
     }
 
     void DeactivateInvincibility()
     {
-        if (nextInvincibility - Time.time < 25)
+        if ((nextInvincibility - Time.time) < (invincibilityCooldown - invincibilityDuration))
         {
             GetComponentInParent<PlayerController>().CmdDeactivateInvincibility();
             isInvincible = false;
@@ -55,14 +56,25 @@ public class Invincibility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isInvincible)
+
+
+        if (Time.time > nextInvincibility)
         {
-            GetComponent<Button>().colors = greenButtonColorBlock;
-            DeactivateInvincibility();
-        }
-        else
+            GetComponent<Button>().interactable = true;
+            GetComponentInChildren<Text>().text = "Invincibility";
+        } else
         {
-            GetComponent<Button>().colors = originalButtonColorBlock;
+            GetComponent<Button>().interactable = false;
+            GetComponentInChildren<Text>().text = (nextInvincibility - Time.time).ToString("F2");
+            if (isInvincible)
+            {
+                GetComponent<Button>().colors = greenButtonColorBlock;
+                DeactivateInvincibility();
+            }
+            else
+            {
+                GetComponent<Button>().colors = originalButtonColorBlock;
+            }
         }
     }
 
