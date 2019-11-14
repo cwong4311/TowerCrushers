@@ -109,6 +109,16 @@ public class PlayerController : NetworkBehaviour
         slider.value = myCatapult.GetComponent<Catapult>().multiplier;
     }
 
+    public void ActivateInvincibility()
+    {
+        if (isServer && Time.time > gameState.GetComponent<Main>().p1_next_invincibility)
+        {
+            gameState.GetComponent<Main>().p1_next_invincibility = Time.time + gameState.GetComponent<Main>().invincibility_cooldown;
+        } else if (!isServer && Time.time > gameState.GetComponent<Main>().p2_next_invincibility)
+        {
+            gameState.GetComponent<Main>().p2_next_invincibility = Time.time + gameState.GetComponent<Main>().invincibility_cooldown;
+        }
+    }
     public void ShootFireball(Vector3 origin, Vector3 direction)
     {
         if (Time.time > nextFireBall)
@@ -127,7 +137,7 @@ public class PlayerController : NetworkBehaviour
         // FromToRotation(new Vector3(0, 0, 1), direction)
         var netFireball = Instantiate(fireballObj, origin, Quaternion.identity);
         netFireball.GetComponent<ConstantForce>().force = direction;
-        NetworkServer.Spawn(netFireball);
+        NetworkServer.SpawnWithClientAuthority(netFireball, connectionToClient);
     }
 
     [Command]

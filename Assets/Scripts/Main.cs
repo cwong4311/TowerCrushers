@@ -12,6 +12,12 @@ public class Main : NetworkBehaviour
     [SyncVar]
     public int p2_towerNum = 0;
 
+    public float invincibility_cooldown = 30;
+    [SyncVar]
+    public float p1_next_invincibility = 0;
+    [SyncVar]
+    public float p2_next_invincibility = 0;
+
     // Start is called before the first frame update
     void Start()
     {

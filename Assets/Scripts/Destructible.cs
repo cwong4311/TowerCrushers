@@ -46,6 +46,11 @@ public class Destructible : NetworkBehaviour
         var boom = Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
         NetworkServer.Spawn(boom);
         NetworkServer.Destroy(go); // ball
+        
+        if (isServer && Time.time - gameState.GetComponent<Main>().p1_next_invincibility < 25)
+        {
+            return;
+        }
         NetworkServer.Destroy(gameObject); // tower 
         DecTowers();
     }

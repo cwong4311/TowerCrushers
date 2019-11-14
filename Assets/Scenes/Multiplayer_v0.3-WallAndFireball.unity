@@ -2327,7 +2327,8 @@ MonoBehaviour:
   - {fileID: 1499661924, guid: 567f0616f0027dc4e8bd034593ca83f1, type: 3}
   - {fileID: 9049972452035491784, guid: 20a1f6020026431408d31147a5bec8b4, type: 3}
   - {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d, type: 3}
-  m_CustomConfig: 0
+  - {fileID: 619260986, guid: 1c3db73e8feb04476ba0828e1a9044df, type: 3}
+  m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
     m_PacketSize: 1440
@@ -4033,6 +4034,9 @@ MonoBehaviour:
   mode: 1
   p1_towerNum: 0
   p2_towerNum: 0
+  invincibility_cooldown: 30
+  p1_next_invincibility: 0
+  p2_next_invincibility: 0
 --- !u!114 &1589839835
 MonoBehaviour:
   m_ObjectHideFlags: 0
