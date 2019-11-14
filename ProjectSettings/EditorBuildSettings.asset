@@ -17,10 +17,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SinglePlayer_v0.8-GoldLimit.unity
     guid: 7feabce65caebb0428b88bc4d182546e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Multiplayer_v0.2.unity
     guid: 075e3329ae064cd4586b3280db681968
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Multiplayer_v0.3-WallAndFireball.unity
     guid: 4159bbe5747cb4c2c9bf09a120ecfd6b
   m_configObjects: {}
