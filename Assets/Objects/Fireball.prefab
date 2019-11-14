@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 619260987}
   - component: {fileID: 114030306394216706}
   - component: {fileID: 114212964610320088}
+  - component: {fileID: 1354843234379499239}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 619260986}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 59.73, y: 1.05, z: 50.65}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6875224, y: 0.6875224, z: 0.6875224}
   m_Children:
   - {fileID: 2971010873992490251}
@@ -112,7 +113,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &619260988
 CapsuleCollider:
@@ -195,6 +196,20 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &1354843234379499239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619260986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2303356f96aee49b29146f3a32760952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
+    type: 3}
 --- !u!1 &3357666153729634049
 GameObject:
   m_ObjectHideFlags: 0
@@ -4903,7 +4918,7 @@ ParticleSystem:
 --- !u!199 &4301621373048869585
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

@@ -1,12 +1,9 @@
 fileFormatVersion: 2
-guid: dc7fea3a674e8419b89987eafd528fcb
+guid: 2303356f96aee49b29146f3a32760952
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - camera: {instanceID: 0}
-  - graphicRaycaster: {instanceID: 0}
-  - fireballObj: {fileID: 619260986, guid: 1c3db73e8feb04476ba0828e1a9044df, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

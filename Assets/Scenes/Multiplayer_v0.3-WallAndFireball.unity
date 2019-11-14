@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.335419, g: 0.3576175, b: 0.3788973, a: 1}
+  m_IndirectSpecularColor: {r: 0.33544248, g: 0.35758588, b: 0.37890998, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -955,6 +955,7 @@ Terrain:
   m_MaterialTemplate: {fileID: 0}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 0
   m_ScaleInLightmap: 0.1024
   m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
   m_GroupingID: 0
@@ -4035,8 +4036,8 @@ MonoBehaviour:
   p1_towerNum: 0
   p2_towerNum: 0
   invincibility_cooldown: 30
-  p1_next_invincibility: 0
-  p2_next_invincibility: 0
+  p1_invincible: 0
+  p2_invincible: 0
 --- !u!114 &1589839835
 MonoBehaviour:
   m_ObjectHideFlags: 0
