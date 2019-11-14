@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BuildFinish : MonoBehaviour
 {
+  public int hi;
     // Start is called before the first frame update
     void Start()
     {

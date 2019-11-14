@@ -12,7 +12,12 @@ public class PlayerController : NetworkBehaviour
     public GameObject gameState;
     public GameObject catapultPrefab;
     public GameObject myCatapult;
-    public GameObject selectedTower;
+    public string selectedTower;
+
+    public GameObject towerPrefab;
+    public GameObject bunkerPrefab;
+    public GameObject wallPrefab;
+
     public GameObject fireballObj;
     public int selectedCost;
 
@@ -46,7 +51,7 @@ public class PlayerController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hasAuthority)
+        if (!hasAuthority || !isLocalPlayer)
         {
             return;
         }
@@ -210,17 +215,37 @@ public class PlayerController : NetworkBehaviour
         NetworkServer.SpawnWithClientAuthority(myCatapult, connectionToClient);
     }
 
+    public void SetMyTower(string tower_name, int tower_cost) {
+        selectedTower = tower_name;
+        selectedCost = tower_cost;
+    }
+
     void SpawnTower(Vector3 pos, bool isTower)
     {
-        CmdSpawnTower(pos);
+        CmdSpawnTower(selectedTower, pos);
         if (isTower) IncTowers();
     }
 
     [Command]
-    void CmdSpawnTower(Vector3 pos)
-    {
-        var tower = Instantiate(selectedTower, pos, transform.rotation);
-        NetworkServer.Spawn(tower);
+    void CmdSpawnTower(string chosenTower, Vector3 pos)
+    {        
+        GameObject myTower = null;
+        switch(chosenTower) {
+            case "Wall":
+                myTower = wallPrefab;
+                break;
+            case "Bunker":
+                myTower = bunkerPrefab;
+                break;
+            default:
+            case "Tower":
+                myTower = towerPrefab;
+                break;
+        }
+        if (myTower != null) {
+            var tower = Instantiate(myTower, pos, transform.rotation);
+            NetworkServer.SpawnWithClientAuthority(tower, connectionToClient);
+        }
     }
 
     private void SetBuildCamera()

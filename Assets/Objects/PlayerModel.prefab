@@ -1897,7 +1897,12 @@ MonoBehaviour:
     type: 3}
   catapultPrefab: {fileID: 1020074010, guid: 32e9b58ca3028e647a7a6037527221f7, type: 3}
   myCatapult: {fileID: 1020074010, guid: 32e9b58ca3028e647a7a6037527221f7, type: 3}
-  selectedTower: {fileID: 1499661924, guid: 567f0616f0027dc4e8bd034593ca83f1, type: 3}
+  selectedTower: 
+  towerPrefab: {fileID: 1499661924, guid: 717398e3cd8f7794990bbf020be486f1, type: 3}
+  bunkerPrefab: {fileID: 9049972452035491784, guid: e1900873c1a63d74b8c072d412f25df0,
+    type: 3}
+  wallPrefab: {fileID: 9049972452035491784, guid: 12121ed1b8b0cd644ac4fa478139d131,
+    type: 3}
   fireballObj: {fileID: 619260986, guid: 1c3db73e8feb04476ba0828e1a9044df, type: 3}
   selectedCost: 100
   currency: 1000
@@ -2038,6 +2043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea4c8cea572833408378e2bbcc10049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hi: 0
 --- !u!1 &4237039618222184377
 GameObject:
   m_ObjectHideFlags: 0
@@ -2381,8 +2387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b2ea2b9aa2a9a94aac8729d36a38b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  my_tower_prefab: {fileID: 9049972452035491784, guid: cb180a814c47e431298b2a07cffa13da,
-    type: 3}
+  my_tower_name: Wall
   my_tower_cost: 75
 --- !u!1 &4922369167406650776
 GameObject:
@@ -2515,7 +2520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b2ea2b9aa2a9a94aac8729d36a38b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  my_tower_prefab: {fileID: 1499661924, guid: 567f0616f0027dc4e8bd034593ca83f1, type: 3}
+  my_tower_name: Tower
   my_tower_cost: 100
 --- !u!1 &5301775179792457825
 GameObject:
@@ -2795,8 +2800,8 @@ RectTransform:
   m_Father: {fileID: 6548957234485041859}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3087,8 +3092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b2ea2b9aa2a9a94aac8729d36a38b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  my_tower_prefab: {fileID: 9049972452035491784, guid: 20a1f6020026431408d31147a5bec8b4,
-    type: 3}
+  my_tower_name: Bunker
   my_tower_cost: 200
 --- !u!1 &6991295226257089399
 GameObject:
@@ -3187,7 +3191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1278937216883852684
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3459,7 +3463,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
