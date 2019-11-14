@@ -33,7 +33,7 @@ public class Destructible : NetworkBehaviour
         }
         if (destructibleBy <= DestructibleBy.Fireball)
         {
-            if (col.gameObject.name == "Fireball")
+            if (col.gameObject.name == "Fireball" || col.gameObject.name == "Fireball(Clone)")
             {
                 CmdDestroyTower(col.gameObject);
             }
