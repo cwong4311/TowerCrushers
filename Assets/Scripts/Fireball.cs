@@ -14,6 +14,9 @@ public class Fireball : MonoBehaviour
     private ColorBlock redButtonColorBlock;
     private bool isFireballTargeting = false;
 
+    private float nextFireBall = 0;
+    private float fireballCooldown = 10;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +68,16 @@ public class Fireball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.time > nextFireBall)
+        {
+            GetComponent<Button>().interactable = true;
+            GetComponentInChildren<Text>().text = "Fireball";
+        } else
+        {
+            GetComponent<Button>().interactable = false;
+            GetComponentInChildren<Text>().text = (nextFireBall - Time.time).ToString("F2");
+        }
+
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             if (isFireballTargeting)
@@ -75,9 +88,11 @@ public class Fireball : MonoBehaviour
                 {
                     GetComponentInParent<PlayerController>().ShootFireball(camera.transform.position, hit - camera.transform.position);
                     SetFireballTargeting(false);
+
+                    nextFireBall = Time.time + fireballCooldown;
                 }
             }
         }
-    }
 
+    }
 }
