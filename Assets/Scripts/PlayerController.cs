@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public enum Phases { BUILD, PLAY };
+public enum Phases { BUILD, PLAY, FORTIFY };
 public enum Modes { SINGLE, MULTI };
 
 public class PlayerController : NetworkBehaviour
@@ -21,10 +21,11 @@ public class PlayerController : NetworkBehaviour
     public Camera currCam;
     public Canvas buildCanvas;
     public Canvas playCanvas;
+    public Canvas fortifyCanvas;
     public Slider slider;
 
-    public float nextFireBall = 0;
-    public float fireballCooldown = 10;
+    private float rechargeRate = 2;
+    private float moneyInc = 0;
 
     private readonly float multiplierStep = 0.01f;
     // Start is called before the first frame update
@@ -49,6 +50,17 @@ public class PlayerController : NetworkBehaviour
         {
             return;
         }
+        
+        if (phase == Phases.PLAY || phase == Phases.FORTIFY) 
+        {
+            if (Time.time > moneyInc) {
+                currency += 5;
+                moneyInc = Time.time + rechargeRate;
+            }
+        } else
+        {
+            moneyInc = Time.time + rechargeRate;
+        }
 
         if (phase == Phases.BUILD)
         {
@@ -68,12 +80,36 @@ public class PlayerController : NetworkBehaviour
                         {
                             currency -= selectedCost;
 
-                            SpawnTower(hit.point);
+                            SpawnTower(hit.point, true);
                         }
                     }
                 }
             }
+        }
 
+        if (phase == Phases.FORTIFY)
+        {
+            SetFortifyCamera();
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Ray ray = currCam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 100))
+                {
+                    // Create a tower if hit
+                    //Debug.Log(hit.collider.gameObject.tag);
+
+                    if (hit.collider.gameObject.tag == "BuildArea")
+                    {
+                        if (currency >= selectedCost)
+                        {
+                            currency -= selectedCost;
+
+                            SpawnTower(hit.point, false);
+                        }
+                    }
+                }
+            }
         }
 
         if (phase == Phases.PLAY)
@@ -98,14 +134,31 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            phase = Phases.PLAY;
+            if (phase != Phases.BUILD) {
+                phase = Phases.PLAY;
+            }
         }
 
-        if (Input.GetKey(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B))
         {
-            phase = Phases.BUILD;
+            if (phase != Phases.BUILD) {
+                selectedCost = 0;
+                selectedTower = null;
+                phase = Phases.FORTIFY;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (phase == Phases.PLAY) {
+                selectedCost = 0;
+                selectedTower = null;
+                phase = Phases.FORTIFY;
+            } else if (phase == Phases.FORTIFY) {
+                phase = Phases.PLAY;
+            }
         }
 
         slider.value = myCatapult.GetComponent<Catapult>().multiplier;
@@ -137,14 +190,7 @@ public class PlayerController : NetworkBehaviour
     }
     public void ShootFireball(Vector3 origin, Vector3 direction)
     {
-        if (Time.time > nextFireBall)
-        {
-            CmdShootFireball(currCam.transform.position, direction);
-            nextFireBall = Time.time + fireballCooldown;
-        } else
-        {
-            Debug.Log("cooldown");
-        }
+        CmdShootFireball(currCam.transform.position, direction);
     }
 
     [Command]
@@ -153,7 +199,7 @@ public class PlayerController : NetworkBehaviour
         Quaternion shootRotation = Quaternion.LookRotation(direction, Vector3.up);
         // FromToRotation(new Vector3(0, 0, 1), direction)
         var netFireball = Instantiate(fireballObj, origin, shootRotation);
-        netFireball.GetComponent<ConstantForce>().force = direction;
+        netFireball.GetComponent<ConstantForce>().force = direction * 3;
         NetworkServer.SpawnWithClientAuthority(netFireball, connectionToClient);
     }
 
@@ -164,10 +210,10 @@ public class PlayerController : NetworkBehaviour
         NetworkServer.SpawnWithClientAuthority(myCatapult, connectionToClient);
     }
 
-    void SpawnTower(Vector3 pos)
+    void SpawnTower(Vector3 pos, bool isTower)
     {
         CmdSpawnTower(pos);
-        IncTowers();
+        if (isTower) IncTowers();
     }
 
     [Command]
@@ -180,6 +226,25 @@ public class PlayerController : NetworkBehaviour
     private void SetBuildCamera()
     {
         buildCanvas.gameObject.SetActive(true);
+        fortifyCanvas.gameObject.SetActive(false);
+        playCanvas.gameObject.SetActive(false);
+        if (isServer)
+        {
+            // p1 build cam
+            currCam.transform.position = new Vector3(87.2f, 66.5f, 365.4f);
+            currCam.transform.rotation = Quaternion.Euler(90f, 90.00001f, 0f);
+        } else
+        {
+            // p2 build cam
+            currCam.transform.position = new Vector3(174.2f, 66.5f, 365.4f);
+            currCam.transform.rotation = Quaternion.Euler(90f, 90f, 180f);
+        }
+    }
+
+    private void SetFortifyCamera()
+    {
+        buildCanvas.gameObject.SetActive(false);
+        fortifyCanvas.gameObject.SetActive(true);
         playCanvas.gameObject.SetActive(false);
         if (isServer)
         {
@@ -197,6 +262,7 @@ public class PlayerController : NetworkBehaviour
     private void SetPlayCamera()
     {
         buildCanvas.gameObject.SetActive(false);
+        fortifyCanvas.gameObject.SetActive(false);
         playCanvas.gameObject.SetActive(true);
         if (isServer)
         {
