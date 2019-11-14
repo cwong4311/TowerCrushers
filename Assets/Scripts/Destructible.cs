@@ -55,19 +55,15 @@ public class Destructible : NetworkBehaviour
         {
             return;
         }
-        NetworkServer.Destroy(gameObject); // tower 
-        DecTowers();
-    }
-
-    public void DecTowers()
-    {
-        if (isServer)
-        {
-            CmdDecTowers("p1");
-        } else
-        {
-            CmdDecTowers("p2");
+        var hitColliders = Physics.OverlapSphere(gameObject.transform.position, 1);
+        for (int i = 0; i < hitColliders.Length; i++) {
+            if (hitColliders[i].name == "P1_Area") {
+                CmdDecTowers("p1");
+            } else if (hitColliders[i].name == "P2_Area") {
+                CmdDecTowers("p2");
+            }
         }
+        NetworkServer.Destroy(gameObject); // tower 
     }
 
     [Command]
