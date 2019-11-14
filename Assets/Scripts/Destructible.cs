@@ -47,7 +47,11 @@ public class Destructible : NetworkBehaviour
         NetworkServer.Spawn(boom);
         NetworkServer.Destroy(go); // ball
         
-        if (isServer && Time.time - gameState.GetComponent<Main>().p1_next_invincibility < 25)
+        if (isServer && gameState.GetComponent<Main>().p1_invincible)
+        {
+            return;
+        }
+        if (isServer && gameState.GetComponent<Main>().p2_invincible)
         {
             return;
         }

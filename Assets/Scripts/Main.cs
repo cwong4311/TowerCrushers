@@ -14,9 +14,9 @@ public class Main : NetworkBehaviour
 
     public float invincibility_cooldown = 30;
     [SyncVar]
-    public float p1_next_invincibility = 0;
+    public bool p1_invincible = false;
     [SyncVar]
-    public float p2_next_invincibility = 0;
+    public bool p2_invincible = false;
 
     // Start is called before the first frame update
     void Start()

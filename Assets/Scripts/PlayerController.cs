@@ -111,14 +111,28 @@ public class PlayerController : NetworkBehaviour
         slider.value = myCatapult.GetComponent<Catapult>().multiplier;
     }
 
-    public void ActivateInvincibility()
+    [Command]
+    public void CmdActivateInvincibility()
     {
-        if (isServer && Time.time > gameState.GetComponent<Main>().p1_next_invincibility)
+        if (isServer)
         {
-            gameState.GetComponent<Main>().p1_next_invincibility = Time.time + gameState.GetComponent<Main>().invincibility_cooldown;
-        } else if (!isServer && Time.time > gameState.GetComponent<Main>().p2_next_invincibility)
+            gameState.GetComponent<Main>().p1_invincible = true;
+        } else 
         {
-            gameState.GetComponent<Main>().p2_next_invincibility = Time.time + gameState.GetComponent<Main>().invincibility_cooldown;
+            gameState.GetComponent<Main>().p2_invincible = true;
+        }
+    }
+
+    [Command]
+    public void CmdDeactivateInvincibility()
+    {
+        if (isServer)
+        {
+            gameState.GetComponent<Main>().p1_invincible = false;
+        }
+        else
+        {
+            gameState.GetComponent<Main>().p2_invincible = false;
         }
     }
     public void ShootFireball(Vector3 origin, Vector3 direction)
