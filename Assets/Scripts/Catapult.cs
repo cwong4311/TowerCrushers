@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Catapult : NetworkBehaviour 
 {
     enum TutorialStage {RotateLeft,RotateRight,ForceIncrease,ForceDecrease,Fire,Reload,Goal,Done};
+    enum State {Ready, Launching, Launched, Reloading};
 
     public GameObject tutorialText;
     public GameObject myBall;
@@ -15,7 +16,7 @@ public class Catapult : NetworkBehaviour
     private float ballForce = 0f;
     public float multiplier = 2f;
     //private TutorialStage tutorialStage = TutorialStage.RotateLeft;
-    private bool isReloading = false;
+    private State state = State.Ready;
 
     private Quaternion maxRightRot = Quaternion.Euler(0f, -60f, 0f);
     private Quaternion maxLeftRot = Quaternion.Euler(0f, 60f, 0f);
@@ -147,8 +148,9 @@ public class Catapult : NetworkBehaviour
 
     IEnumerator Launch()
     {
-        if (curBall != null)
+        if (curBall != null && state == State.Ready)
         {
+            state = State.Launching;
             Vector3 forward = ballSpawn.forward;
             float z = Mathf.Sign(ballSpawn.right.x);
             RpcChangePivotAngularVelocity(new Vector3(0, 0, z * catapult_force));
@@ -159,15 +161,16 @@ public class Catapult : NetworkBehaviour
             RpcChangePivotAngularVelocity(new Vector3(0, 0, 0f));
 
             curBall = null;
+            state = State.Launched;
         }
     }
 
     IEnumerator Reel()
     {
-        if (!isReloading)
+        if (state == State.Launched)
         {
+            state = State.Reloading;
             float z = Mathf.Sign(ballSpawn.right.x) * -1;
-            isReloading = true;
             RpcChangePivotAngularVelocity(new Vector3(0, 0, z * catapult_reel));
             Debug.Log(z);
             yield return new WaitForSeconds(.5f);
@@ -175,7 +178,7 @@ public class Catapult : NetworkBehaviour
             yield return new WaitForSeconds(1.5f);
             CmdSpawnBall();
             yield return new WaitForSeconds(.5f);
-            isReloading = false;
+            state = State.Ready;
         }
     }
 
