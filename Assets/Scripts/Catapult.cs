@@ -170,9 +170,8 @@ public class Catapult : NetworkBehaviour
         if (state == State.Launched)
         {
             state = State.Reloading;
-            float z = Mathf.Sign(ballSpawn.right.x) * -1;
+            float z = Mathf.Sign(ballSpawn.up.z) * -1;
             RpcChangePivotAngularVelocity(new Vector3(0, 0, z * catapult_reel));
-            Debug.Log(z);
             yield return new WaitForSeconds(.5f);
             RpcChangePivotAngularVelocity(new Vector3(0, 0, 0f));
             yield return new WaitForSeconds(1.5f);
