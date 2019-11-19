@@ -70,10 +70,18 @@ public class FireballButton : MonoBehaviour
         if (Time.time > nextFireBall)
         {
             GetComponent<Button>().interactable = true;
-            GetComponentInChildren<Text>().text = "Fireball";
+            GameObject fireballImage = GameObject.FindWithTag("FireballImage");
+            if (fireballImage != null) {
+                fireballImage.GetComponent<Image>().enabled = true;
+            }
+            GetComponentInChildren<Text>().text = "";
         } else
         {
             GetComponent<Button>().interactable = false;
+            GameObject fireballImage = GameObject.FindWithTag("FireballImage");
+            if (fireballImage != null) {
+                fireballImage.GetComponent<Image>().enabled = false;
+            }
             GetComponentInChildren<Text>().text = (nextFireBall - Time.time).ToString("F2");
         }
 

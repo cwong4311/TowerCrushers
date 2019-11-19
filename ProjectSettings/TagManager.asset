@@ -7,6 +7,8 @@ TagManager:
   - BuildArea
   - GameState
   - Tower
+  - FireballImage
+  - InvincibilityImage
   layers:
   - Default
   - TransparentFX

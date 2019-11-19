@@ -61,10 +61,18 @@ public class Invincibility : MonoBehaviour
         if (Time.time > nextInvincibility)
         {
             GetComponent<Button>().interactable = true;
-            GetComponentInChildren<Text>().text = "Invincibility";
+            GameObject invincibilityImage = GameObject.FindWithTag("InvincibilityImage");
+            if (invincibilityImage != null) {
+                invincibilityImage.GetComponent<Image>().enabled = true;
+            }
+            GetComponentInChildren<Text>().text = "";
         } else
         {
             GetComponent<Button>().interactable = false;
+            GameObject invincibilityImage = GameObject.FindWithTag("InvincibilityImage");
+            if (invincibilityImage != null) {
+                invincibilityImage.GetComponent<Image>().enabled = false;
+            }
             GetComponentInChildren<Text>().text = (nextInvincibility - Time.time).ToString("F2");
             if (isInvincible)
             {
