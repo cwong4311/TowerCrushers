@@ -14,6 +14,6 @@ public class GoldDisplay : MonoBehaviour
     void Update()
     {
         var currency = GetComponentInParent<PlayerController>().currency;
-        transform.Find("Text").GetComponent<Text>().text = "Gold Remaining:\n" + currency.ToString();
+        transform.Find("Text").GetComponent<Text>().text = currency.ToString();
     }
 }
