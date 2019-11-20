@@ -11,6 +11,7 @@ public class Main : NetworkBehaviour
     public int p1_towerNum = 0;
     [SyncVar]
     public int p2_towerNum = 0;
+    public bool gameOver = false;
 
     public float invincibility_cooldown = 30;
     [SyncVar]
@@ -23,6 +24,7 @@ public class Main : NetworkBehaviour
     {
         p1_towerNum = 0;
         p2_towerNum = 0;
+
         if (mode == Modes.SINGLE)
         {
             p2_towerNum = 8;
@@ -32,5 +34,24 @@ public class Main : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void Reset()
+    {
+        p1_towerNum = 0;
+        p2_towerNum = 0;
+        gameOver = false;
+        p1_invincible = false;
+        p2_invincible = false;
+
+        if (mode == Modes.SINGLE)
+        {
+            p2_towerNum = 8;
+        }
+    }
+
+    public void SetGameOver(bool status)
+    {
+        gameOver = status;
     }
 }

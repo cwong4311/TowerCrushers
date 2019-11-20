@@ -28,6 +28,7 @@ public class PlayerController : NetworkBehaviour
     public Canvas buildCanvas;
     public Canvas playCanvas;
     public Canvas fortifyCanvas;
+    public Canvas resultsCanvas;
     public Slider slider;
 
     private float rechargeRate = 2;
@@ -64,7 +65,14 @@ public class PlayerController : NetworkBehaviour
         {
             return;
         }
-        
+        int p1_towers = gameState.GetComponent<Main>().p1_towerNum;
+        int p2_towers = gameState.GetComponent<Main>().p2_towerNum;
+
+        if ((p1_towers == 0 || p2_towers == 0) && phase != Phases.BUILD)
+        {
+            gameState.GetComponent<Main>().SetGameOver(true);
+        }
+
         if (phase == Phases.PLAY || phase == Phases.FORTIFY) 
         {
             if (Time.time > moneyInc) {
@@ -163,6 +171,12 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
+    }
+
+    [Command]
+    public void CmdEndGame()
+    {
+        gameState.GetComponent<Main>().gameOver = true;
     }
 
     [Command]

@@ -10,6 +10,8 @@ TagManager:
   - FireballImage
   - InvincibilityImage
   - Top
+  - MainMenu
+  - Results
   layers:
   - Default
   - TransparentFX

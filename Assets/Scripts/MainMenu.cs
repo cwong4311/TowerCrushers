@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
 {
     private NetworkManager manager;
     public GameObject gameState;
+    public GameObject resultsCanvas;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class MainMenu : MonoBehaviour
         manager.StartHost();
 
         SetGameView();
+        gameState.GetComponent<Main>().Reset();
         gameState.GetComponent<Main>().mode = Modes.SINGLE;
     }
 
@@ -54,6 +56,7 @@ public class MainMenu : MonoBehaviour
         manager.matchMaker.CreateMatch("default", 2, true, "", "", "", 0, 0, OnMatchCreate);
 
         SetGameView();
+        gameState.GetComponent<Main>().Reset();
         gameState.GetComponent<Main>().mode = Modes.MULTI;
     }
 
@@ -90,6 +93,7 @@ public class MainMenu : MonoBehaviour
         manager.matchMaker.JoinMatch(nid, "", "", "", 0, 0, manager.OnMatchJoined);
         DisableTowers();
         SetGameView();
+        gameState.GetComponent<Main>().Reset();
         gameState.GetComponent<Main>().mode = Modes.MULTI;
     }
 
@@ -102,8 +106,6 @@ public class MainMenu : MonoBehaviour
             manager.matchMaker.DropConnection(matchInfo.networkId, matchInfo.nodeId, 0, manager.OnDropConnection);
         }
         manager.StopHost();
-
-        SetMenuView();
     }
 
     void SetGameView()
@@ -121,7 +123,7 @@ public class MainMenu : MonoBehaviour
         transform.Find("Disconnect").gameObject.SetActive(true);
     }
 
-    void SetMenuView()
+    public void SetMenuView()
     {
         transform.Find("MenuCamera").gameObject.SetActive(true);
         transform.Find("Text").gameObject.SetActive(true);
@@ -129,6 +131,8 @@ public class MainMenu : MonoBehaviour
         transform.Find("Multiplayer").gameObject.SetActive(true);
         transform.Find("Exit").gameObject.SetActive(true);
         transform.Find("Disconnect").gameObject.SetActive(false);
+        resultsCanvas.GetComponent<CheckWin>().SetResultMenuItems(false);
+        gameState.GetComponent<Main>().SetGameOver(false);
     }
 
     public void ExitGame()
