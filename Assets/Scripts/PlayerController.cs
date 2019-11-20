@@ -17,6 +17,7 @@ public class PlayerController : NetworkBehaviour
     public GameObject towerPrefab;
     public GameObject bunkerPrefab;
     public GameObject wallPrefab;
+    public GameObject smallTowerPrefab;
 
     public GameObject fireballObj;
     public int selectedCost;
@@ -236,6 +237,9 @@ public class PlayerController : NetworkBehaviour
                 break;
             case "Bunker":
                 myTower = bunkerPrefab;
+                break;
+            case "SmallTower":
+                myTower = smallTowerPrefab;
                 break;
             default:
             case "Tower":

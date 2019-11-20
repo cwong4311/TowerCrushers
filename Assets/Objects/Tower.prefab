@@ -1120,6 +1120,10 @@ MonoBehaviour:
   explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
     type: 3}
   gameState: {fileID: 0}
+  destructibleBy: 0
+  damagedMaterial: {fileID: 2100000, guid: 01c04496878436140922b19f5220712b, type: 2}
+  healthyMaterial: {fileID: 2100000, guid: a24037aa2dae5b145b048dcaf948032a, type: 2}
+  health: 1
 --- !u!54 &54475174024607808
 Rigidbody:
   m_ObjectHideFlags: 0

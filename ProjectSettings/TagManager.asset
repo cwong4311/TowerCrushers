@@ -9,6 +9,7 @@ TagManager:
   - Tower
   - FireballImage
   - InvincibilityImage
+  - Top
   layers:
   - Default
   - TransparentFX

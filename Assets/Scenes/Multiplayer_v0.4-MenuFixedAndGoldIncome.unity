@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3354551, g: 0.35760477, b: 0.37891525, a: 1}
+  m_IndirectSpecularColor: {r: 0.335419, g: 0.3576175, b: 0.3788973, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2074,7 +2074,6 @@ Terrain:
   m_MaterialTemplate: {fileID: 0}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
-  m_DeringLightProbesForTrees: 0
   m_ScaleInLightmap: 0.1024
   m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
   m_GroupingID: 0
@@ -9450,6 +9449,7 @@ MonoBehaviour:
   - {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d, type: 3}
   - {fileID: 619260986, guid: 1c3db73e8feb04476ba0828e1a9044df, type: 3}
   - {fileID: 9049972452035491784, guid: 12121ed1b8b0cd644ac4fa478139d131, type: 3}
+  - {fileID: 7745156441910454158, guid: cbec0f13dab5dea49a4016c9ac4cd270, type: 3}
   m_CustomConfig: 1
   m_MaxConnections: 2
   m_ConnectionConfig:

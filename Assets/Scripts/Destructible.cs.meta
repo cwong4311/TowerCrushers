@@ -3,7 +3,11 @@ guid: 0017eb8eb6f5844b5a646e0e4ef1ff9f
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - explosion: {instanceID: 0}
+  - gameState: {instanceID: 0}
+  - damagedMaterial: {fileID: 2100000, guid: 01c04496878436140922b19f5220712b, type: 2}
+  - healthyMaterial: {fileID: 2100000, guid: a24037aa2dae5b145b048dcaf948032a, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

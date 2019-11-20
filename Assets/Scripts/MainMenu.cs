@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
 {
     public NetworkManager manager;
     public GameObject gameState;
-    private string[] towerTypes = { "Tower", "Bunker" };
+    private string[] towerTypes = { "Tower", "Bunker", "SmallTower" };
 
     // Start is called before the first frame update
     void Start()
