@@ -3,33 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.Networking.Types;
+using UnityEngine.Networking.Match;
 using System.Linq;
 
 public class MainMenu : MonoBehaviour
 {
-    public NetworkManager manager;
+    private NetworkManager manager;
     public GameObject gameState;
-    private string[] towerTypes = { "Tower", "Bunker", "SmallTower" };
 
     // Start is called before the first frame update
     void Start()
     {
+        manager = NetworkManager.singleton;
         var input = transform.Find("InputField").gameObject.GetComponentInChildren<InputField>();
-        var se= new InputField.SubmitEvent();
+        var se = new InputField.SubmitEvent();
         se.AddListener(SetIPAddress);
         input.onEndEdit = se;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void StartPractice()
     {
         manager.StartHost();
-        SetGameState();
 
         gameObject.SetActive(false);
         Camera.main.enabled = false;
@@ -51,24 +46,52 @@ public class MainMenu : MonoBehaviour
     {
         manager.networkAddress = arg0;
 
-        transform.Find("JoinGame").GetComponent<Button>().interactable = true;
+        //transform.Find("JoinGame").GetComponent<Button>().interactable = true;
     }
 
     public void HostGame()
     {
-        manager.StartHost();
-        DisableTowers();
-        SetGameState();
+        //manager.StartHost();
+        manager.StartMatchMaker();
+        manager.matchMaker.CreateMatch("default", 2, true, "", "", "", 0, 0, OnMatchCreate);
+
         gameObject.SetActive(false);
         Camera.main.enabled = false;
         gameState.GetComponent<Main>().mode = Modes.MULTI;
     }
 
+    public void OnMatchCreate(bool success, string extendedInfo, MatchInfo matchInfo)
+    {
+        manager.OnMatchCreate(success, extendedInfo, matchInfo);
+        DisableTowers();
+    }
+
     public void JoinGame()
     {
-        manager.StartClient();
+        manager.StartMatchMaker();
+        manager.matchMaker.ListMatches(0, 20, "", false, 0, 0, OnMatchList);
+    }
+
+    public void OnMatchList(bool success, string extendedInfo, List<MatchInfoSnapshot> matches)
+    {
+        NetworkID nid = NetworkID.Invalid;
+        foreach (var match in matches)
+        {
+            if (match.currentSize < match.maxSize)
+            {
+                nid = match.networkId;
+                break;
+            }
+        }
+
+        if (nid == NetworkID.Invalid)
+        {
+            Debug.Log("failed to find game");
+            return;
+        }
+
+        manager.matchMaker.JoinMatch(nid, "", "", "", 0, 0, manager.OnMatchJoined);
         DisableTowers();
-        SetGameState();
         gameObject.SetActive(false);
         Camera.main.enabled = false;
         gameState.GetComponent<Main>().mode = Modes.MULTI;
@@ -83,14 +106,11 @@ public class MainMenu : MonoBehaviour
     {
         var towers = GameObject.FindGameObjectsWithTag("Tower");
 
+        Debug.Log("disabling...");
         foreach (var tower in towers)
         {
+            Debug.Log(tower);
             Destroy(tower);
         }
-    }
-
-    void SetGameState()
-    {
-        gameState = GameObject.FindWithTag("GameState");
     }
 }

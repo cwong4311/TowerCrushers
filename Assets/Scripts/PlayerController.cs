@@ -34,6 +34,27 @@ public class PlayerController : NetworkBehaviour
     private float moneyInc = 0;
 
     private readonly float multiplierStep = 0.01f;
+
+    /*
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        gameState = GameObject.FindWithTag("GameState");
+
+        if (gameState.GetComponent<Main>().mode == Modes.SINGLE)
+        {
+            return;
+        }
+        var towers = GameObject.FindGameObjectsWithTag("Tower");
+
+        Debug.Log("disabling...");
+        foreach (var tower in towers)
+        {
+            Debug.Log(tower);
+            Destroy(tower);
+        }
+    }
+    */
     // Start is called before the first frame update
     void Start()
     {
