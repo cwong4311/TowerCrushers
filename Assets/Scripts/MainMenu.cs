@@ -26,8 +26,7 @@ public class MainMenu : MonoBehaviour
     {
         manager.StartHost();
 
-        gameObject.SetActive(false);
-        Camera.main.enabled = false;
+        SetGameView();
         gameState.GetComponent<Main>().mode = Modes.SINGLE;
     }
 
@@ -51,12 +50,10 @@ public class MainMenu : MonoBehaviour
 
     public void HostGame()
     {
-        //manager.StartHost();
         manager.StartMatchMaker();
         manager.matchMaker.CreateMatch("default", 2, true, "", "", "", 0, 0, OnMatchCreate);
 
-        gameObject.SetActive(false);
-        Camera.main.enabled = false;
+        SetGameView();
         gameState.GetComponent<Main>().mode = Modes.MULTI;
     }
 
@@ -92,9 +89,46 @@ public class MainMenu : MonoBehaviour
 
         manager.matchMaker.JoinMatch(nid, "", "", "", 0, 0, manager.OnMatchJoined);
         DisableTowers();
-        gameObject.SetActive(false);
-        Camera.main.enabled = false;
+        SetGameView();
         gameState.GetComponent<Main>().mode = Modes.MULTI;
+    }
+
+    public void Disconnect()
+    {
+
+        if (gameState.GetComponent<Main>().mode == Modes.MULTI)
+        {
+            MatchInfo matchInfo = manager.matchInfo;
+            manager.matchMaker.DropConnection(matchInfo.networkId, matchInfo.nodeId, 0, manager.OnDropConnection);
+        }
+        manager.StopHost();
+
+        SetMenuView();
+    }
+
+    void SetGameView()
+    {
+        transform.Find("Text").gameObject.SetActive(false);
+        transform.Find("InputField").gameObject.SetActive(false);
+        transform.Find("HostGame").gameObject.SetActive(false);
+        transform.Find("JoinGame").gameObject.SetActive(false);
+
+        transform.Find("Practice").gameObject.SetActive(false);
+        transform.Find("Multiplayer").gameObject.SetActive(false);
+        transform.Find("Exit").gameObject.SetActive(false);
+
+        transform.Find("MenuCamera").gameObject.SetActive(false);
+        transform.Find("Disconnect").gameObject.SetActive(true);
+    }
+
+    void SetMenuView()
+    {
+        transform.Find("MenuCamera").gameObject.SetActive(true);
+        transform.Find("Text").gameObject.SetActive(true);
+        transform.Find("Practice").gameObject.SetActive(true);
+        transform.Find("Multiplayer").gameObject.SetActive(true);
+        transform.Find("Exit").gameObject.SetActive(true);
+        transform.Find("Disconnect").gameObject.SetActive(false);
     }
 
     public void ExitGame()
@@ -106,10 +140,8 @@ public class MainMenu : MonoBehaviour
     {
         var towers = GameObject.FindGameObjectsWithTag("Tower");
 
-        Debug.Log("disabling...");
         foreach (var tower in towers)
         {
-            Debug.Log(tower);
             Destroy(tower);
         }
     }

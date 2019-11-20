@@ -35,26 +35,13 @@ public class PlayerController : NetworkBehaviour
 
     private readonly float multiplierStep = 0.01f;
 
-    /*
-    public override void OnStartServer()
+    private void OnDisable()
     {
-        base.OnStartServer();
-        gameState = GameObject.FindWithTag("GameState");
-
-        if (gameState.GetComponent<Main>().mode == Modes.SINGLE)
-        {
-            return;
-        }
-        var towers = GameObject.FindGameObjectsWithTag("Tower");
-
-        Debug.Log("disabling...");
-        foreach (var tower in towers)
-        {
-            Debug.Log(tower);
-            Destroy(tower);
-        }
+        buildCanvas.gameObject.SetActive(false);
+        fortifyCanvas.gameObject.SetActive(false);
+        playCanvas.gameObject.SetActive(false);
     }
-    */
+
     // Start is called before the first frame update
     void Start()
     {
@@ -92,51 +79,13 @@ public class PlayerController : NetworkBehaviour
         if (phase == Phases.BUILD)
         {
             SetBuildCamera();
-            if (Input.GetButtonDown("Fire1"))
-            {
-                Ray ray = currCam.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100))
-                {
-                    // Create a tower if hit
-                    //Debug.Log(hit.collider.gameObject.tag);
-
-                    if (hit.collider.gameObject.tag == "BuildArea")
-                    {
-                        if (currency >= selectedCost)
-                        {
-                            currency -= selectedCost;
-
-                            SpawnTower(hit.point, true);
-                        }
-                    }
-                }
-            }
+            CheckTowerSpawn(true);
         }
 
         if (phase == Phases.FORTIFY)
         {
             SetFortifyCamera();
-            if (Input.GetButtonDown("Fire1"))
-            {
-                Ray ray = currCam.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 100))
-                {
-                    // Create a tower if hit
-                    //Debug.Log(hit.collider.gameObject.tag);
-
-                    if (hit.collider.gameObject.tag == "BuildArea")
-                    {
-                        if (currency >= selectedCost)
-                        {
-                            currency -= selectedCost;
-
-                            SpawnTower(hit.point, false);
-                        }
-                    }
-                }
-            }
+            CheckTowerSpawn(false);
         }
 
         if (phase == Phases.PLAY)
@@ -189,6 +138,31 @@ public class PlayerController : NetworkBehaviour
         }
 
         slider.value = myCatapult.GetComponent<Catapult>().multiplier;
+    }
+
+    void CheckTowerSpawn(bool isTower)
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Ray ray = currCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                // Create a tower if hit
+                //Debug.Log(hit.collider.gameObject.tag);
+
+                if (hit.collider.gameObject.tag == "BuildArea")
+                {
+                    if (currency >= selectedCost)
+                    {
+                        currency -= selectedCost;
+
+                        SpawnTower(hit.point, isTower);
+                    }
+                }
+            }
+        }
+
     }
 
     [Command]
