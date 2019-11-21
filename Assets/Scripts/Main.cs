@@ -54,4 +54,10 @@ public class Main : NetworkBehaviour
     {
         gameOver = status;
     }
+
+    [Command]
+    public void CmdSetGameOver(bool status)
+    {
+        SetGameOver(status);
+    }
 }

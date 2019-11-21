@@ -38,9 +38,7 @@ public class PlayerController : NetworkBehaviour
 
     private void OnDisable()
     {
-        buildCanvas.gameObject.SetActive(false);
-        fortifyCanvas.gameObject.SetActive(false);
-        playCanvas.gameObject.SetActive(false);
+        gameState.GetComponent<Main>().CmdSetGameOver(true);
     }
 
     // Start is called before the first frame update
@@ -67,6 +65,12 @@ public class PlayerController : NetworkBehaviour
         }
         int p1_towers = gameState.GetComponent<Main>().p1_towerNum;
         int p2_towers = gameState.GetComponent<Main>().p2_towerNum;
+
+        if (isServer && (NetworkServer.connections.Count != 2))
+        {
+            Debug.Log("Waiting for player to connect");
+            return;
+        }
 
         if ((p1_towers == 0 || p2_towers == 0) && phase != Phases.BUILD)
         {
@@ -347,4 +351,5 @@ public class PlayerController : NetworkBehaviour
             gameState.GetComponent<Main>().p2_towerNum++;
         }
     }
+
 }
