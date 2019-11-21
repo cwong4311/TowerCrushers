@@ -17,10 +17,6 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         manager = NetworkManager.singleton;
-        var input = transform.Find("InputField").gameObject.GetComponentInChildren<InputField>();
-        var se = new InputField.SubmitEvent();
-        se.AddListener(SetIPAddress);
-        input.onEndEdit = se;
     }
 
     public void StartPractice()
@@ -34,20 +30,12 @@ public class MainMenu : MonoBehaviour
 
     public void ShowMultiplayer()
     {
-        transform.Find("InputField").gameObject.SetActive(true);
         transform.Find("HostGame").gameObject.SetActive(true);
         transform.Find("JoinGame").gameObject.SetActive(true);
 
         transform.Find("Practice").gameObject.SetActive(false);
         transform.Find("Multiplayer").gameObject.SetActive(false);
         transform.Find("Exit").gameObject.SetActive(false);
-    }
-
-    public void SetIPAddress(string arg0)
-    {
-        manager.networkAddress = arg0;
-
-        //transform.Find("JoinGame").GetComponent<Button>().interactable = true;
     }
 
     public void HostGame()
@@ -86,8 +74,11 @@ public class MainMenu : MonoBehaviour
 
         if (nid == NetworkID.Invalid)
         {
-            Debug.Log("failed to find game");
+            transform.Find("ErrorMsg").gameObject.SetActive(true);
             return;
+        } else
+        {
+            transform.Find("ErrorMsg").gameObject.SetActive(false);
         }
 
         manager.matchMaker.JoinMatch(nid, "", "", "", 0, 0, manager.OnMatchJoined);
@@ -111,7 +102,6 @@ public class MainMenu : MonoBehaviour
     void SetGameView()
     {
         transform.Find("Text").gameObject.SetActive(false);
-        transform.Find("InputField").gameObject.SetActive(false);
         transform.Find("HostGame").gameObject.SetActive(false);
         transform.Find("JoinGame").gameObject.SetActive(false);
 

@@ -28,7 +28,7 @@ public class PlayerController : NetworkBehaviour
     public Canvas buildCanvas;
     public Canvas playCanvas;
     public Canvas fortifyCanvas;
-    public Canvas resultsCanvas;
+    public Canvas errorCanvas;
     public Slider slider;
 
     private float rechargeRate = 2;
@@ -66,10 +66,13 @@ public class PlayerController : NetworkBehaviour
         int p1_towers = gameState.GetComponent<Main>().p1_towerNum;
         int p2_towers = gameState.GetComponent<Main>().p2_towerNum;
 
-        if (isServer && (NetworkServer.connections.Count != 2))
+        if (isServer && (NetworkServer.connections.Count != 2) && gameState.GetComponent<Main>().mode != Modes.SINGLE)
         {
-            Debug.Log("Waiting for player to connect");
+            errorCanvas.gameObject.SetActive(true);
             return;
+        } else
+        {
+            errorCanvas.gameObject.SetActive(false);
         }
 
         if ((p1_towers == 0 || p2_towers == 0) && phase != Phases.BUILD)
