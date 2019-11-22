@@ -8,6 +8,7 @@ public class CustomNetworkManager : NetworkManager {
     private bool player1_taken = false;
     public GameObject p1_spawn;
     public GameObject p2_spawn;
+    public GameObject ClientDC_msg;
 
     // Server callbacks
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
@@ -27,5 +28,27 @@ public class CustomNetworkManager : NetworkManager {
     public override void OnStopHost() {
         Debug.Log("Host has stopped");
         player1_taken = false;
+    }
+
+    public override void OnServerDisconnect(NetworkConnection conn) {
+        //NetworkServer.DestroyPlayersForConnection(conn);
+        if (conn.lastError != NetworkError.Ok) {
+            if (LogFilter.logError) { Debug.LogError("Server Disconnected due to error: " + conn.lastError); }
+        }
+        Debug.Log("A client disconnected from the server: " + conn);
+
+        ClientDC_msg.SetActive(true);
+    }
+
+    public override void OnClientDisconnect(NetworkConnection conn) {
+        if (conn.lastError != NetworkError.Ok)
+        {
+            if (LogFilter.logError) { 
+                Debug.LogError("Client Disconnected due to error: " + conn.lastError);
+            }
+        }
+        Debug.Log("Client disconnected from server: " + conn);
+
+        ClientDC_msg.SetActive(true);
     }
 }

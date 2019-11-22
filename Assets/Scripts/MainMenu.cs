@@ -25,7 +25,8 @@ public class MainMenu : MonoBehaviour
     public void StartPractice()
     {
         manager.StartHost();
-
+        
+        EnableTowers();
         SetGameView();
 
         gameState.GetComponent<Main>().mode = Modes.SINGLE;
@@ -130,6 +131,7 @@ public class MainMenu : MonoBehaviour
         transform.Find("Multiplayer").gameObject.SetActive(true);
         transform.Find("Exit").gameObject.SetActive(true);
         transform.Find("Disconnect").gameObject.SetActive(false);
+        transform.Find("ClientDC").gameObject.SetActive(false);
         resultsCanvas.GetComponent<CheckWin>().SetResultMenuItems(false);
         gameState.GetComponent<Main>().SetGameOver(false);
     }
@@ -145,7 +147,16 @@ public class MainMenu : MonoBehaviour
 
         foreach (var tower in towers)
         {
-            Destroy(tower);
+            tower.SetActive(false);
+        }
+    }
+    void EnableTowers()
+    {
+        var towers = GameObject.FindGameObjectsWithTag("Tower");
+
+        foreach (var tower in towers)
+        {
+            tower.SetActive(true);
         }
     }
 }

@@ -34,6 +34,8 @@ public class PlayerController : NetworkBehaviour
     private float rechargeRate = 2;
     private float moneyInc = 0;
 
+    private bool buildable = false;
+
     private readonly float multiplierStep = 0.01f;
 
     private void OnDisable()
@@ -165,7 +167,7 @@ public class PlayerController : NetworkBehaviour
 
     void CheckTowerSpawn(bool isTower)
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && buildable)
         {
             Ray ray = currCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -181,6 +183,14 @@ public class PlayerController : NetworkBehaviour
                         currency -= selectedCost;
 
                         SpawnTower(hit.point, isTower);
+
+                        if (isServer)
+                        {
+                            StartCoroutine(BuildSync(selectedTower, selectedCost, 0.2f));
+                        } else
+                        {
+                            StartCoroutine(BuildSync(selectedTower, selectedCost, 1f));                           
+                        }
                     }
                 }
             }
@@ -241,8 +251,16 @@ public class PlayerController : NetworkBehaviour
     }
 
     public void SetMyTower(string tower_name, int tower_cost) {
+        selectedTower = "";
+        selectedCost = 0;
+        StartCoroutine(BuildSync(tower_name, tower_cost, 0.2f));
+    }
+    IEnumerator BuildSync(string tower_name, int tower_cost, float wait) {
+        buildable = false;
         selectedTower = tower_name;
         selectedCost = tower_cost;
+        yield return new WaitForSeconds(wait);
+        buildable = true;
     }
 
     void SpawnTower(Vector3 pos, bool isTower)
@@ -265,9 +283,10 @@ public class PlayerController : NetworkBehaviour
             case "SmallTower":
                 myTower = smallTowerPrefab;
                 break;
-            default:
             case "Tower":
                 myTower = towerPrefab;
+                break;
+            default:
                 break;
         }
         if (myTower != null) {
@@ -284,12 +303,12 @@ public class PlayerController : NetworkBehaviour
         if (isServer)
         {
             // p1 build cam
-            currCam.transform.position = new Vector3(87.2f, 66.5f, 365.4f);
-            currCam.transform.rotation = Quaternion.Euler(90f, 90.00001f, 0f);
+            currCam.transform.position = new Vector3(87.2f, 66.5f, 365.6f);
+            currCam.transform.rotation = Quaternion.Euler(90f, 90f, 0f);
         } else
         {
             // p2 build cam
-            currCam.transform.position = new Vector3(174.2f, 66.5f, 365.4f);
+            currCam.transform.position = new Vector3(178.2f, 66.5f, 365.6f);
             currCam.transform.rotation = Quaternion.Euler(90f, 90f, 180f);
         }
     }
@@ -307,12 +326,12 @@ public class PlayerController : NetworkBehaviour
         if (isServer)
         {
             // p1 build cam
-            currCam.transform.position = new Vector3(87.2f, 66.5f, 365.4f);
-            currCam.transform.rotation = Quaternion.Euler(90f, 90.00001f, 0f);
+            currCam.transform.position = new Vector3(87.2f, 66.5f, 365.6f);
+            currCam.transform.rotation = Quaternion.Euler(90f, 90f, 0f);
         } else
         {
             // p2 build cam
-            currCam.transform.position = new Vector3(174.2f, 66.5f, 365.4f);
+            currCam.transform.position = new Vector3(178.2f, 66.5f, 365.6f);
             currCam.transform.rotation = Quaternion.Euler(90f, 90f, 180f);
         }
     }
@@ -325,13 +344,13 @@ public class PlayerController : NetworkBehaviour
         if (isServer)
         {
             // p1 play cam
-            currCam.transform.position = new Vector3(57.5f, 14.8f, 365.7f);
-            currCam.transform.rotation = Quaternion.Euler(13.871f, 90.00001f, 0f);
+            currCam.transform.position = new Vector3(57.5f, 15f, 365f);
+            currCam.transform.rotation = Quaternion.Euler(14f, 90f, 0f);
         } else
         {
             // p2 play cam
-            currCam.transform.position = new Vector3(208.85f, 15.26f, 365.68f);
-            currCam.transform.rotation = Quaternion.Euler(13.871f, 270.729f, 0f);
+            currCam.transform.position = new Vector3(208.85f, 15f, 365f);
+            currCam.transform.rotation = Quaternion.Euler(14f, 270f, 0f);
         }
     }
 
