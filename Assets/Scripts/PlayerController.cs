@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public enum Phases { BUILD, PLAY, FORTIFY };
+public enum Phases { BUILD, WAIT, PLAY, FORTIFY };
 public enum Modes { SINGLE, MULTI };
 
 public class PlayerController : NetworkBehaviour
@@ -75,7 +75,7 @@ public class PlayerController : NetworkBehaviour
             errorCanvas.gameObject.SetActive(false);
         }
 
-        if ((p1_towers == 0 || p2_towers == 0) && phase != Phases.BUILD)
+        if ((p1_towers == 0 || p2_towers == 0) && !(phase == Phases.BUILD || phase == Phases.WAIT))
         {
             gameState.GetComponent<Main>().SetGameOver(true);
         }
@@ -95,6 +95,14 @@ public class PlayerController : NetworkBehaviour
         {
             SetBuildCamera();
             CheckTowerSpawn(true);
+        }
+        if (phase == Phases.WAIT)
+        {
+            SetWaiting();
+            if (gameState.GetComponent<Main>().p1_buildFinish == true && gameState.GetComponent<Main>().p2_buildFinish == true)
+            {
+                phase = Phases.PLAY;
+            }
         }
 
         if (phase == Phases.FORTIFY)
@@ -286,6 +294,11 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    private void SetWaiting()
+    {
+        buildCanvas.transform.Find("LoadText").gameObject.SetActive(true);
+    }
+
     private void SetFortifyCamera()
     {
         buildCanvas.gameObject.SetActive(false);
@@ -355,4 +368,26 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    public void FinishBuilding(bool state)
+    {
+        if (isServer)
+        {
+            CmdFinishBuilding("p1", state);
+        } else
+        {
+            CmdFinishBuilding("p2", state);
+        }        
+    }
+    
+    [Command]
+    public void CmdFinishBuilding(string player, bool state)
+    {
+        if (player == "p1")
+        {
+            gameState.GetComponent<Main>().p1_buildFinish = state;
+        } else if (player == "p2")
+        {
+            gameState.GetComponent<Main>().p2_buildFinish = state;
+        }
+    }
 }

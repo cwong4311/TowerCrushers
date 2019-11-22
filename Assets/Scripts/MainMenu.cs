@@ -40,6 +40,8 @@ public class MainMenu : MonoBehaviour
 
     public void HostGame()
     {
+        transform.Find("ErrorMsg").gameObject.SetActive(false);
+        
         manager.StartMatchMaker();
         manager.matchMaker.CreateMatch("default", 2, true, "", "", "", 0, 0, OnMatchCreate);
 
@@ -56,6 +58,7 @@ public class MainMenu : MonoBehaviour
 
     public void JoinGame()
     {
+        transform.Find("ErrorMsg").gameObject.SetActive(false);
         manager.StartMatchMaker();
         manager.matchMaker.ListMatches(0, 20, "", false, 0, 0, OnMatchList);
     }

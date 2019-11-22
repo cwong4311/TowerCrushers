@@ -15,6 +15,6 @@ public class BuildTower : MonoBehaviour
     }
 
 	void TaskOnClick(){
-      GetComponentInParent<PlayerController>().SetMyTower(my_tower_name, my_tower_cost);
+        GetComponentInParent<PlayerController>().SetMyTower(my_tower_name, my_tower_cost);
 	}
 }

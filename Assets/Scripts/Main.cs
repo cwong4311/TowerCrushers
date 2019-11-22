@@ -11,6 +11,10 @@ public class Main : NetworkBehaviour
     public int p1_towerNum = 0;
     [SyncVar]
     public int p2_towerNum = 0;
+    [SyncVar]
+    public bool p1_buildFinish = false;
+    [SyncVar]
+    public bool p2_buildFinish = false;
     public bool gameOver = false;
 
     public float invincibility_cooldown = 30;
@@ -28,6 +32,7 @@ public class Main : NetworkBehaviour
         if (mode == Modes.SINGLE)
         {
             p2_towerNum = 8;
+            p2_buildFinish = true;
         }
     }
 
@@ -40,6 +45,8 @@ public class Main : NetworkBehaviour
     {
         p1_towerNum = 0;
         p2_towerNum = 0;
+        p1_buildFinish = false;
+        p2_buildFinish = false;
         gameOver = false;
         p1_invincible = false;
         p2_invincible = false;

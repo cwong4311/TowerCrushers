@@ -1010,7 +1010,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 158.5, y: -51.4}
+  m_AnchoredPosition: {x: 158.5, y: -51.399902}
   m_SizeDelta: {x: 300, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &331401401
@@ -2245,7 +2245,7 @@ RectTransform:
   m_GameObject: {fileID: 730698371}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.23259, y: 0.23259, z: 0.23259}
   m_Children: []
   m_Father: {fileID: 1361792889}
   m_RootOrder: 9
@@ -2277,16 +2277,16 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 50
+    m_FontSize: 173
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 5
-    m_MaxSize: 50
+    m_MaxSize: 195
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Failed to find a game.
 --- !u!222 &730698374
@@ -3902,6 +3902,8 @@ MonoBehaviour:
   mode: 1
   p1_towerNum: 0
   p2_towerNum: 0
+  p1_buildFinish: 0
+  p2_buildFinish: 0
   gameOver: 0
   invincibility_cooldown: 30
   p1_invincible: 0
