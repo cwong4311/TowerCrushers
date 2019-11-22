@@ -54,6 +54,7 @@ public class Main : NetworkBehaviour
         if (mode == Modes.SINGLE)
         {
             p2_towerNum = 8;
+            p2_buildFinish = true;
         }
     }
 

@@ -13,6 +13,9 @@ public class MainMenu : MonoBehaviour
     public GameObject gameState;
     public GameObject resultsCanvas;
 
+    public GameObject p1_spawn;
+    public GameObject p2_spawn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +27,9 @@ public class MainMenu : MonoBehaviour
         manager.StartHost();
 
         SetGameView();
-        gameState.GetComponent<Main>().Reset();
+
         gameState.GetComponent<Main>().mode = Modes.SINGLE;
+        gameState.GetComponent<Main>().Reset();
     }
 
     public void ShowMultiplayer()
@@ -41,13 +45,13 @@ public class MainMenu : MonoBehaviour
     public void HostGame()
     {
         transform.Find("ErrorMsg").gameObject.SetActive(false);
-        
-        manager.StartMatchMaker();
-        manager.matchMaker.CreateMatch("default", 2, true, "", "", "", 0, 0, OnMatchCreate);
 
+        manager.StartMatchMaker();
+        manager.matchMaker.CreateMatch(Random.Range(0, 99999).ToString(), 2, true, "", "", "", 0, 0, OnMatchCreate);
+        
         SetGameView();
-        gameState.GetComponent<Main>().Reset();
         gameState.GetComponent<Main>().mode = Modes.MULTI;
+        gameState.GetComponent<Main>().Reset();
     }
 
     public void OnMatchCreate(bool success, string extendedInfo, MatchInfo matchInfo)
@@ -87,8 +91,8 @@ public class MainMenu : MonoBehaviour
         manager.matchMaker.JoinMatch(nid, "", "", "", 0, 0, manager.OnMatchJoined);
         DisableTowers();
         SetGameView();
-        gameState.GetComponent<Main>().Reset();
         gameState.GetComponent<Main>().mode = Modes.MULTI;
+        gameState.GetComponent<Main>().Reset();
     }
 
     public void Disconnect()
@@ -119,6 +123,7 @@ public class MainMenu : MonoBehaviour
 
     public void SetMenuView()
     {
+        transform.Find("RawImage").gameObject.SetActive(true);
         transform.Find("MenuCamera").gameObject.SetActive(true);
         transform.Find("Text").gameObject.SetActive(true);
         transform.Find("Practice").gameObject.SetActive(true);
