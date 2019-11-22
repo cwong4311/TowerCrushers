@@ -101,6 +101,7 @@ public class MainMenu : MonoBehaviour
 
     void SetGameView()
     {
+        transform.Find("RawImage").gameObject.SetActive(false);
         transform.Find("Text").gameObject.SetActive(false);
         transform.Find("HostGame").gameObject.SetActive(false);
         transform.Find("JoinGame").gameObject.SetActive(false);
