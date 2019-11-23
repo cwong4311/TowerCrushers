@@ -214,7 +214,7 @@ MonoBehaviour:
     type: 3}
   gameState: {fileID: 0}
   barrier: {fileID: 4799253136134504369, guid: 8bb39030a877ab4408bc81111bcb7a50, type: 3}
-  destructibleBy: 1
+  destructibleBy: 0
   damagedMaterial: {fileID: 2100000, guid: 01c04496878436140922b19f5220712b, type: 2}
   healthyMaterial: {fileID: 2100000, guid: a24037aa2dae5b145b048dcaf948032a, type: 2}
   health: 1
