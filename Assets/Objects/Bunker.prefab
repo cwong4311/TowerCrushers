@@ -300,8 +300,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7376756827350565739}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.5627177, y: 3.8122659, z: -9.445595}
-  m_LocalScale: {x: 0.6160738, y: 5.4048133, z: 19.131037}
+  m_LocalPosition: {x: 0.85, y: 3.8122659, z: -9.445595}
+  m_LocalScale: {x: 0.6160738, y: 5.4048133, z: 20.091415}
   m_Children: []
   m_Father: {fileID: 8814183164402328034}
   m_RootOrder: 4
@@ -482,7 +482,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7376756827824381278}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.808312, y: 10.520001, z: -5.6499977}
+  m_LocalPosition: {x: 9.18, y: 10.520001, z: -5.6499977}
   m_LocalScale: {x: 0.6160735, y: 5.4048133, z: 4.579012}
   m_Children: []
   m_Father: {fileID: 8814183164402328034}
@@ -664,8 +664,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7376756828168163547}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.5627177, y: 3.8122659, z: 8.779814}
-  m_LocalScale: {x: 0.6160738, y: 5.4048133, z: 19.131037}
+  m_LocalPosition: {x: 0.8500001, y: 3.8122659, z: 8.779814}
+  m_LocalScale: {x: 0.6160738, y: 5.4048133, z: 20.091415}
   m_Children: []
   m_Father: {fileID: 8814183164402328034}
   m_RootOrder: 3
@@ -755,7 +755,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7376756828182652734}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 7.1068497, y: 10.520001, z: -2.9014628}
+  m_LocalPosition: {x: 7.1068497, y: 10.520001, z: -3.09}
   m_LocalScale: {x: 0.6160738, y: 5.4048133, z: 4.579014}
   m_Children: []
   m_Father: {fileID: 8814183164402328034}
@@ -1009,7 +1009,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &7236697143940176643
 MonoBehaviour:
@@ -1026,7 +1026,9 @@ MonoBehaviour:
   explosion: {fileID: 4643804656241305691, guid: fffdd44eb32f249f597d5791cb61e65d,
     type: 3}
   gameState: {fileID: 0}
+  barrier: {fileID: 4799253136134504369, guid: 8bb39030a877ab4408bc81111bcb7a50, type: 3}
   destructibleBy: 0
   damagedMaterial: {fileID: 2100000, guid: 01c04496878436140922b19f5220712b, type: 2}
   healthyMaterial: {fileID: 2100000, guid: a24037aa2dae5b145b048dcaf948032a, type: 2}
   health: 1
+  isTower: 1

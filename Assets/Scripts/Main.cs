@@ -31,7 +31,7 @@ public class Main : NetworkBehaviour
 
         if (mode == Modes.SINGLE)
         {
-            p2_towerNum = 8;
+            p2_towerNum = 9;
             p2_buildFinish = true;
         }
     }
@@ -53,7 +53,7 @@ public class Main : NetworkBehaviour
 
         if (mode == Modes.SINGLE)
         {
-            p2_towerNum = 8;
+            p2_towerNum = 9;
             p2_buildFinish = true;
         }
     }

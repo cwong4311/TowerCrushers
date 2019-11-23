@@ -204,26 +204,46 @@ public class PlayerController : NetworkBehaviour
         gameState.GetComponent<Main>().gameOver = true;
     }
 
-    [Command]
-    public void CmdActivateInvincibility()
+    public void ActivateInvincibility()
     {
         if (isServer)
         {
-            gameState.GetComponent<Main>().p1_invincible = true;
+            CmdActivateInvincibility("p1");
         } else 
         {
-            gameState.GetComponent<Main>().p2_invincible = true;
+            CmdActivateInvincibility("p2");
         }
     }
 
     [Command]
-    public void CmdDeactivateInvincibility()
+    public void CmdActivateInvincibility(string player)
+    {
+        if (player == "p1")
+        {
+            gameState.GetComponent<Main>().p1_invincible = true;
+        } else if (player == "p2")
+        {
+            gameState.GetComponent<Main>().p2_invincible = true;
+        }
+    }
+    public void DeactivateInvincibility()
     {
         if (isServer)
         {
-            gameState.GetComponent<Main>().p1_invincible = false;
+            CmdDeactivateInvincibility("p1");
+        } else 
+        {
+            CmdDeactivateInvincibility("p2");
         }
-        else
+    }
+
+    [Command]
+    public void CmdDeactivateInvincibility(string player)
+    {
+        if (player == "p1")
+        {
+            gameState.GetComponent<Main>().p1_invincible = false;
+        } else if (player == "p2")
         {
             gameState.GetComponent<Main>().p2_invincible = false;
         }

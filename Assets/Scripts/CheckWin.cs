@@ -24,7 +24,7 @@ public class CheckWin : MonoBehaviour
             var winner = (p1_towers > p2_towers) ? "PLAYER 1" : "PLAYER 2";
             transform.Find("Text").GetComponent<Text>().text = winner + " WINS!";
 
-            mainMenu.GetComponent<MainMenu>().Disconnect();
+            //mainMenu.GetComponent<MainMenu>().Disconnect();
             mainMenu.transform.Find("Disconnect").gameObject.SetActive(false);
             SetResultMenuItems(true);
         }

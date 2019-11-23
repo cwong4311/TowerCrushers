@@ -8,11 +8,14 @@ public class Destructible : NetworkBehaviour
     public enum DestructibleBy { Ball,Fireball } // what is required to destroy this object
     public GameObject explosion;
     public GameObject gameState;
+    public GameObject barrier;
     public DestructibleBy destructibleBy;
     public Material damagedMaterial;
     public Material healthyMaterial;
     [SyncVar]
-    public int health = 2;
+    public int health = 1;
+    public bool isTower;
+    private bool hitDelay = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,26 +24,20 @@ public class Destructible : NetworkBehaviour
         Debug.Log(gameObject.name);
         if (gameObject.name.StartsWith("SmallTower") || gameObject.name.StartsWith("Bunker"))
         {
-            health = 4;
+            health = 2;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (health > 2)
-        {
-            MeshRenderer[] walls = GetComponentsInChildren<MeshRenderer>();
-            foreach (MeshRenderer w in walls)
+        if (isServer) {
+            if (health > 1)
             {
-                w.material = healthyMaterial;
-            }
-        } else
-        {
-            Component[] walls = GetComponentsInChildren<MeshRenderer>();
-            foreach (MeshRenderer w in walls)
+                RpcChangeMat("healthy");
+            } else
             {
-               w.material = damagedMaterial;
+                RpcChangeMat("damaged");
             }
         }
     }
@@ -52,7 +49,6 @@ public class Destructible : NetworkBehaviour
             if (col.gameObject.name == "Ball" || col.gameObject.name == "Ball(Clone)")
             {
                 CmdDestroyTower(col.gameObject);
-                return;
             }
         }
         
@@ -69,36 +65,47 @@ public class Destructible : NetworkBehaviour
     [Command]
     void CmdDestroyTower(GameObject go)
     {
-        Debug.Log("asd");
+        if (hitDelay) return;
+        hitDelay = true;
+        StartCoroutine(DelayConsecutiveHit(0.2f));
+
         var boom = Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
         NetworkServer.Spawn(boom);
         NetworkServer.Destroy(go); // ball
-        
-        if (isServer && gameState.GetComponent<Main>().p1_invincible)
-        {
-            return;
-        }
-        if (isServer && gameState.GetComponent<Main>().p2_invincible)
-        {
-            return;
-        }
 
-        health--;
-        if (health <= 0)
+        var hitColliders = Physics.OverlapSphere(gameObject.transform.position, 1);
+        for (int i = 0; i < hitColliders.Length; i++)
         {
-            var hitColliders = Physics.OverlapSphere(gameObject.transform.position, 1);
-            for (int i = 0; i < hitColliders.Length; i++)
+            if (hitColliders[i].name == "P1_Area")
             {
-                if (hitColliders[i].name == "P1_Area")
+                if (gameState.GetComponent<Main>().p1_invincible)
                 {
-                    CmdDecTowers("p1");
+                    RpcSpawnBarrier(gameObject);
+                    return;
                 }
-                else if (hitColliders[i].name == "P2_Area")
-                {
-                    CmdDecTowers("p2");
+
+                health--;
+
+                if (health <= 0) {
+                    if (isTower) CmdDecTowers("p1");
+                    NetworkServer.Destroy(gameObject); // tower
                 }
             }
-            NetworkServer.Destroy(gameObject); // tower 
+            else if (hitColliders[i].name == "P2_Area")
+            {
+                if (gameState.GetComponent<Main>().p2_invincible)
+                {
+                    RpcSpawnBarrier(gameObject);
+                    return;
+                }
+
+                health--;
+
+                if (health <= 0) {
+                    if (isTower) CmdDecTowers("p2");
+                    NetworkServer.Destroy(gameObject); // tower
+                }
+            }
         }
     }
 
@@ -112,5 +119,30 @@ public class Destructible : NetworkBehaviour
         {
             gameState.GetComponent<Main>().p2_towerNum--;
         }
+    }
+    [ClientRpc]
+    void RpcSpawnBarrier(GameObject location) {
+        Instantiate(barrier, location.transform.position, Quaternion.identity);
+    }
+
+    [ClientRpc]
+    void RpcChangeMat(string health)
+    {
+        MeshRenderer[] walls = GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer w in walls)
+        {
+            if (health == "healthy")
+            {
+                w.material = healthyMaterial;        // this is the line that actually makes the change in color happen
+            } else if (health == "damaged")
+            {
+                w.material = damagedMaterial; 
+            }
+        }
+    }
+
+    IEnumerator DelayConsecutiveHit(float wait) {
+        yield return new WaitForSeconds(wait);
+        hitDelay = false;
     }
 }

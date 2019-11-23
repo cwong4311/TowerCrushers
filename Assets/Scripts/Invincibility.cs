@@ -35,7 +35,7 @@ public class Invincibility : MonoBehaviour
     {
         if (Time.time > nextInvincibility)
         {
-            GetComponentInParent<PlayerController>().CmdActivateInvincibility();
+            GetComponentInParent<PlayerController>().ActivateInvincibility();
             nextInvincibility = Time.time + invincibilityCooldown;
             isInvincible = true;
             GetComponent<Button>().interactable = false;
@@ -47,7 +47,7 @@ public class Invincibility : MonoBehaviour
     {
         if ((nextInvincibility - Time.time) < (invincibilityCooldown - invincibilityDuration))
         {
-            GetComponentInParent<PlayerController>().CmdDeactivateInvincibility();
+            GetComponentInParent<PlayerController>().DeactivateInvincibility();
             isInvincible = false;
         }
 
