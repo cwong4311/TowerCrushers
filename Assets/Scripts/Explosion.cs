@@ -7,24 +7,23 @@ public class Explosion : NetworkBehaviour
 {
     private readonly float explosionSeconds = 1f;
 
-    // Start is called before the first frame update
     void Start()
     {
         CmdDestroyExplosion();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /*
+     * Tell the server to destroy the explosion
+     */
     [Command]
     void CmdDestroyExplosion()
     {
         StartCoroutine(DestroyWithDelay());
     }
 
+    /*
+     * Wait x seconds then destroy the explosion
+     */
     IEnumerator DestroyWithDelay()
     {
         yield return new WaitForSeconds(explosionSeconds);

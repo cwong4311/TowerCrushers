@@ -30,6 +30,7 @@ public class Catapult : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // reverse player 2's catapult
         if (!isServer && hasAuthority) 
         {
             transform.Rotate(0f, 180f, 0f);
@@ -110,8 +111,6 @@ public class Catapult : NetworkBehaviour
             CmdReel();
       //      if (tutorialStage == TutorialStage.Reload) AdvanceTutorialStage();
         }
-        //       if (!isReloading)
-        //       {
         if (Input.GetKey(KeyCode.D))
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, maxRightRot, catapultRotStep);
@@ -136,21 +135,29 @@ public class Catapult : NetworkBehaviour
             //      if (tutorialStage == TutorialStage.ForceDecrease) AdvanceTutorialStage();
         }
         */
-        //       }
     }
 
+    /*
+     * Tell the server to launch the catapult
+     */
     [Command]
     void CmdLaunch()
     {
         StartCoroutine(Launch());
     }
 
+    /*
+     * Tell the server to reel the catapult and spawn another ball
+     */
     [Command]
     void CmdReel()
     {
         StartCoroutine(Reel());
     }
 
+    /*
+     * Launch the catapult
+     */
     IEnumerator Launch()
     {
         if (curBall != null && state == State.Ready)
@@ -171,6 +178,9 @@ public class Catapult : NetworkBehaviour
         }
     }
 
+    /*
+     * Reel the catapult and spawn another ball
+     */
     IEnumerator Reel()
     {
         if (state == State.Launched)
@@ -187,6 +197,9 @@ public class Catapult : NetworkBehaviour
         }
     }
 
+    /*
+     * Tell each client to change the current catapults angular velocity
+     */
     [ClientRpc]
     void RpcChangePivotAngularVelocity(Vector3 v)
     {
@@ -194,6 +207,9 @@ public class Catapult : NetworkBehaviour
         pipe.GetComponent<Rigidbody>().angularVelocity = v;
     }
 
+    /*
+     * Tell the server to spawn another ball
+     */
     [Command]
     public void CmdSpawnBall() {
         curBall = Instantiate(myBall, ballSpawn.position, Quaternion.identity);

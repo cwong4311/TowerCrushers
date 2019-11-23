@@ -5,14 +5,9 @@ using UnityEngine.UI;
 
 public class GoldDisplay : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        // update the currency viewer for the current player
         var currency = GetComponentInParent<PlayerController>().currency;
         transform.Find("Text").GetComponent<Text>().text = currency.ToString();
     }

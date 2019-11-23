@@ -36,11 +36,9 @@ public class Main : NetworkBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
+    /*
+     * Reset the game to its initial state
+     */
     public void Reset()
     {
         p1_towerNum = 0;
@@ -58,11 +56,17 @@ public class Main : NetworkBehaviour
         }
     }
 
+    /*
+     * Set the game over status
+     */
     public void SetGameOver(bool status)
     {
         gameOver = status;
     }
 
+    /*
+     * Tell the server to set the game over status
+     */
     [Command]
     public void CmdSetGameOver(bool status)
     {

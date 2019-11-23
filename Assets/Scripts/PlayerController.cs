@@ -41,11 +41,6 @@ public class PlayerController : NetworkBehaviour
 
     private readonly float multiplierStep = 0.01f;
 
-    private void OnDisable()
-    {
-        gameState.GetComponent<Main>().CmdSetGameOver(true);
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -71,9 +66,8 @@ public class PlayerController : NetworkBehaviour
         {
             return;
         }
-        int p1_towers = gameState.GetComponent<Main>().p1_towerNum;
-        int p2_towers = gameState.GetComponent<Main>().p2_towerNum;
 
+        // wait for another player to join the game
         if (isServer && (NetworkServer.connections.Count != 2) && gameState.GetComponent<Main>().mode != Modes.SINGLE)
         {
             errorCanvas.gameObject.SetActive(true);
@@ -83,17 +77,23 @@ public class PlayerController : NetworkBehaviour
             errorCanvas.gameObject.SetActive(false);
         }
 
+        int p1_towers = gameState.GetComponent<Main>().p1_towerNum;
+        int p2_towers = gameState.GetComponent<Main>().p2_towerNum;
+
+        // end the game if either player has no more towers remaining
         if ((p1_towers == 0 || p2_towers == 0) && !(phase == Phases.BUILD || phase == Phases.WAIT))
         {
             gameState.GetComponent<Main>().SetGameOver(true);
         }
 
+        // show help
         if (Input.GetKeyDown(KeyCode.F1))
         {
             controlHelpActive = !controlHelpActive;
             menuCanvas.transform.Find("ControlsPopUp").gameObject.SetActive(controlHelpActive);
         }
 
+        // passively increase currency
         if (phase == Phases.PLAY || phase == Phases.FORTIFY) 
         {
             if (Time.time > moneyInc) {
@@ -105,12 +105,15 @@ public class PlayerController : NetworkBehaviour
             moneyInc = Time.time + rechargeRate;
         }
 
+        // initial build tower/bunker/small tower phase
         if (phase == Phases.BUILD)
         {
             SetBuildCamera();
             CheckTowerSpawn(true);
             divider.enabled = true;
         }
+
+        // wait for the other player to finish placing their towers
         if (phase == Phases.WAIT)
         {
             SetWaiting();
@@ -121,16 +124,19 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
+        // build mode (only walls) after the initial build phase
         if (phase == Phases.FORTIFY)
         {
             SetFortifyCamera();
             CheckTowerSpawn(false);
         }
 
+        // control the catapult
         if (phase == Phases.PLAY)
         {
             SetPlayCamera();
             
+            // increase the force of the catapult
             if (Input.GetKey(KeyCode.W))
             {
                 if (myCatapult.GetComponent<Catapult>().multiplier < 4)
@@ -139,6 +145,8 @@ public class PlayerController : NetworkBehaviour
                     myCatapult.GetComponent<Catapult>().multiplier += multiplierStep;   //Local Increment
                 }
             }
+
+            // decrease the force of the catapult
             if (Input.GetKey(KeyCode.S))
             {
                 if (myCatapult.GetComponent<Catapult>().multiplier > 1)
@@ -149,6 +157,7 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
+        // switch to play mode
         if (Input.GetKeyDown(KeyCode.P))
         {
             if (phase == Phases.FORTIFY) {
@@ -156,6 +165,7 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
+        // switch to build mode
         if (Input.GetKeyDown(KeyCode.B))
         {
             if (phase == Phases.PLAY) {
@@ -165,6 +175,7 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
+        // toggle between modes
         if (Input.GetKeyDown(KeyCode.T))
         {
             if (phase == Phases.PLAY) {
@@ -179,6 +190,9 @@ public class PlayerController : NetworkBehaviour
         slider.value = myCatapult.GetComponent<Catapult>().multiplier;
     }
 
+    /*
+     * Check if a unit can spawn on the area the player clicked on
+     */
     void CheckTowerSpawn(bool isTower)
     {
         if (Input.GetButtonDown("Fire1") && buildable)
@@ -212,12 +226,9 @@ public class PlayerController : NetworkBehaviour
 
     }
 
-    [Command]
-    public void CmdEndGame()
-    {
-        gameState.GetComponent<Main>().gameOver = true;
-    }
-
+    /*
+     * Activate invincibility for a player
+     */
     public void ActivateInvincibility()
     {
         if (isServer)
@@ -229,6 +240,9 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    /*
+     * Tell the server to activate invincibility
+     */
     [Command]
     public void CmdActivateInvincibility(string player)
     {
@@ -240,6 +254,10 @@ public class PlayerController : NetworkBehaviour
             gameState.GetComponent<Main>().p2_invincible = true;
         }
     }
+
+    /* 
+     * Deactivate invincibility for a player
+     */
     public void DeactivateInvincibility()
     {
         if (isServer)
@@ -251,6 +269,9 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    /* 
+     * Tell the server to deactivate invincibility
+     */
     [Command]
     public void CmdDeactivateInvincibility(string player)
     {
@@ -262,11 +283,18 @@ public class PlayerController : NetworkBehaviour
             gameState.GetComponent<Main>().p2_invincible = false;
         }
     }
+
+    /*
+     * Spawn a fireball
+     */
     public void ShootFireball(Vector3 origin, Vector3 direction)
     {
         CmdShootFireball(currCam.transform.position, direction);
     }
 
+    /*
+     * Tell the server to spawn the fireball
+     */
     [Command]
     void CmdShootFireball(Vector3 origin, Vector3 direction)
     {
@@ -277,6 +305,9 @@ public class PlayerController : NetworkBehaviour
         NetworkServer.SpawnWithClientAuthority(netFireball, connectionToClient);
     }
 
+    /*
+     * Tell the server to spawn the player's catapult
+     */
     [Command]
     void CmdSpawnCatapult()
     {
@@ -284,11 +315,18 @@ public class PlayerController : NetworkBehaviour
         NetworkServer.SpawnWithClientAuthority(myCatapult, connectionToClient);
     }
 
+    /* 
+     * Set the unit to spawn
+     */
     public void SetMyTower(string tower_name, int tower_cost) {
         selectedTower = "";
         selectedCost = 0;
         StartCoroutine(BuildSync(tower_name, tower_cost, 0.2f));
     }
+
+    /*
+     * Wait x amount of time for a player to build another unit
+     */
     IEnumerator BuildSync(string tower_name, int tower_cost, float wait) {
         buildable = false;
         selectedTower = tower_name;
@@ -297,12 +335,18 @@ public class PlayerController : NetworkBehaviour
         buildable = true;
     }
 
+    /*
+     * Spawn the unit
+     */
     void SpawnTower(Vector3 pos, bool isTower)
     {
         CmdSpawnTower(selectedTower, pos);
         if (isTower) IncTowers();
     }
 
+    /*
+     * Tell the server to spawn a unit
+     */
     [Command]
     void CmdSpawnTower(string chosenTower, Vector3 pos)
     {        
@@ -329,6 +373,9 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    /*
+     * Setup the build mode cameras and menus
+     */
     private void SetBuildCamera()
     {
         buildCanvas.gameObject.SetActive(true);
@@ -347,11 +394,17 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    /*
+     * Load the waiting text
+     */
     private void SetWaiting()
     {
         buildCanvas.transform.Find("LoadText").gameObject.SetActive(true);
     }
 
+    /*
+     * Setup the fortify mode cameras and menus
+     */
     private void SetFortifyCamera()
     {
         buildCanvas.gameObject.SetActive(false);
@@ -370,6 +423,9 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    /*
+     * Setup the play mode cameras and menus
+     */
     private void SetPlayCamera()
     {
         buildCanvas.gameObject.SetActive(false);
@@ -388,16 +444,25 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    /*
+     * Increase the force of the catapult
+     */
     void IncForce(float increment) {
         CmdIncForce(increment);
     }
 
+    /*
+     * Tell the server to increase the force of the catapult
+     */
     [Command]
     void CmdIncForce(float increment)
     {
         myCatapult.GetComponent<Catapult>().multiplier += increment;
     }
 
+    /*
+     * Increment the amount of towers a player has spawned
+     */
     public void IncTowers()
     {
         if (isServer)
@@ -409,6 +474,9 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    /*
+     * Tell the server to increment the amount of towers a player has spawned
+     */
     [Command]
     public void CmdIncTowers(string player)
     {
@@ -421,6 +489,9 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
+    /*
+     * Tell the server that a player has finished placing towers
+     */
     public void FinishBuilding(bool state)
     {
         if (isServer)
@@ -432,6 +503,9 @@ public class PlayerController : NetworkBehaviour
         }        
     }
     
+    /*
+     * Tell the server that a player has finished placing towers
+     */
     [Command]
     public void CmdFinishBuilding(string player, bool state)
     {

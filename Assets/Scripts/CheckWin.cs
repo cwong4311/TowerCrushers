@@ -8,14 +8,10 @@ public class CheckWin : MonoBehaviour
     public GameObject mainMenu;
     public GameObject gameState;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
+        // end the game and give the user the option to exit or go back to the menu
         if (gameState.GetComponent<Main>().gameOver)
         {
             int p1_towers = gameState.GetComponent<Main>().p1_towerNum;
@@ -30,6 +26,9 @@ public class CheckWin : MonoBehaviour
         }
     }
 
+    /*
+     * Change the visibility of the results menu
+     */
     public void SetResultMenuItems(bool status)
     {
         transform.Find("Text").gameObject.SetActive(status);
