@@ -120,6 +120,7 @@ public class MainMenu : MonoBehaviour
 
         transform.Find("MenuCamera").gameObject.SetActive(false);
         transform.Find("Disconnect").gameObject.SetActive(true);
+        transform.Find("HelpText").gameObject.SetActive(true);
     }
 
     public void SetMenuView()
@@ -131,6 +132,7 @@ public class MainMenu : MonoBehaviour
         transform.Find("Multiplayer").gameObject.SetActive(true);
         transform.Find("Exit").gameObject.SetActive(true);
         transform.Find("Disconnect").gameObject.SetActive(false);
+        transform.Find("HelpText").gameObject.SetActive(false);
         transform.Find("ClientDC").gameObject.SetActive(false);
         resultsCanvas.GetComponent<CheckWin>().SetResultMenuItems(false);
         gameState.GetComponent<Main>().SetGameOver(false);

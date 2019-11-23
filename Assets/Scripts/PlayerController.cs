@@ -10,6 +10,7 @@ public enum Modes { SINGLE, MULTI };
 public class PlayerController : NetworkBehaviour
 {
     public GameObject gameState;
+    public GameObject menuCanvas;
     public GameObject catapultPrefab;
     public GameObject myCatapult;
     public string selectedTower;
@@ -36,6 +37,7 @@ public class PlayerController : NetworkBehaviour
     public Collider divider;
 
     private bool buildable = false;
+    private bool controlHelpActive = false;
 
     private readonly float multiplierStep = 0.01f;
 
@@ -48,6 +50,7 @@ public class PlayerController : NetworkBehaviour
     void Start()
     {
         gameState = GameObject.FindWithTag("GameState");
+        menuCanvas = GameObject.FindWithTag("MainMenu");
         divider = GameObject.FindWithTag("Divider").GetComponent<Collider>();
 
         if (!isLocalPlayer)
@@ -83,6 +86,12 @@ public class PlayerController : NetworkBehaviour
         if ((p1_towers == 0 || p2_towers == 0) && !(phase == Phases.BUILD || phase == Phases.WAIT))
         {
             gameState.GetComponent<Main>().SetGameOver(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            controlHelpActive = !controlHelpActive;
+            menuCanvas.transform.Find("ControlsPopUp").gameObject.SetActive(controlHelpActive);
         }
 
         if (phase == Phases.PLAY || phase == Phases.FORTIFY) 
