@@ -157,6 +157,7 @@ public class Catapult : NetworkBehaviour
             Debug.Log(z);
             yield return new WaitForSeconds(.3f);
             curBall.GetComponent<Rigidbody>().AddForce(forward * multiplier * ballForce, ForceMode.Impulse);
+            curBall.GetComponent<ExpireTime>().StartLife(20f);
             yield return new WaitForSeconds(.2f);
             RpcChangePivotAngularVelocity(new Vector3(0, 0, 0f));
 
