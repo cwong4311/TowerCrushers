@@ -12,6 +12,7 @@ TagManager:
   - Top
   - MainMenu
   - Results
+  - Divider
   layers:
   - Default
   - TransparentFX

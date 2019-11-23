@@ -129,7 +129,8 @@ public class Destructible : NetworkBehaviour
     }
     [ClientRpc]
     void RpcSpawnBarrier(GameObject location) {
-        Instantiate(barrier, location.transform.position, Quaternion.identity);
+        var shield = Instantiate(barrier, location.transform.position, Quaternion.identity);
+        shield.GetComponent<ExpireTime>().StartLife(1f);
     }
 
     [ClientRpc]

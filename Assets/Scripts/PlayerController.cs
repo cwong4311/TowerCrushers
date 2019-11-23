@@ -33,6 +33,7 @@ public class PlayerController : NetworkBehaviour
 
     private float rechargeRate = 2;
     private float moneyInc = 0;
+    public Collider divider;
 
     private bool buildable = false;
 
@@ -47,6 +48,8 @@ public class PlayerController : NetworkBehaviour
     void Start()
     {
         gameState = GameObject.FindWithTag("GameState");
+        divider = GameObject.FindWithTag("Divider").GetComponent<Collider>();
+
         if (!isLocalPlayer)
         {
             return;
@@ -97,6 +100,7 @@ public class PlayerController : NetworkBehaviour
         {
             SetBuildCamera();
             CheckTowerSpawn(true);
+            divider.enabled = true;
         }
         if (phase == Phases.WAIT)
         {
@@ -104,6 +108,7 @@ public class PlayerController : NetworkBehaviour
             if (gameState.GetComponent<Main>().p1_buildFinish == true && gameState.GetComponent<Main>().p2_buildFinish == true)
             {
                 phase = Phases.PLAY;
+                divider.enabled = false;
             }
         }
 
@@ -116,7 +121,7 @@ public class PlayerController : NetworkBehaviour
         if (phase == Phases.PLAY)
         {
             SetPlayCamera();
-
+            
             if (Input.GetKey(KeyCode.W))
             {
                 if (myCatapult.GetComponent<Catapult>().multiplier < 4)
@@ -137,14 +142,14 @@ public class PlayerController : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (phase != Phases.BUILD) {
+            if (phase == Phases.FORTIFY) {
                 phase = Phases.PLAY;
             }
         }
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            if (phase != Phases.BUILD) {
+            if (phase == Phases.PLAY) {
                 selectedCost = 0;
                 selectedTower = null;
                 phase = Phases.FORTIFY;
