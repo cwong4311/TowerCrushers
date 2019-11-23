@@ -22,7 +22,7 @@ public class Destructible : NetworkBehaviour
     {
         gameState = GameObject.FindWithTag("GameState");
         Debug.Log(gameObject.name);
-        if (gameObject.name.StartsWith("SmallTower") || gameObject.name.StartsWith("Bunker"))
+        if (gameObject.name.StartsWith("SmallTower") || gameObject.name.StartsWith("Bunker") || gameObject.name.StartsWith("Wall"))
         {
             health = 2;
         }
@@ -84,6 +84,9 @@ public class Destructible : NetworkBehaviour
                     return;
                 }
 
+                if (gameObject.name.StartsWith("Wall") && go.name.StartsWith("Fireball")) {
+                    health--;
+                }
                 health--;
 
                 if (health <= 0) {
@@ -97,6 +100,10 @@ public class Destructible : NetworkBehaviour
                 {
                     RpcSpawnBarrier(gameObject);
                     return;
+                }
+
+                if (gameObject.name.StartsWith("Wall") && go.name.StartsWith("Fireball")) {
+                    health--;
                 }
 
                 health--;
