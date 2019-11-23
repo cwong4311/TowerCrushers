@@ -16,7 +16,7 @@ public class Catapult : NetworkBehaviour
     private float ballForce = 0f;
     public float multiplier = 2f;
     //private TutorialStage tutorialStage = TutorialStage.RotateLeft;
-    private State state = State.Ready;
+    private State state = State.Launched;
 
     private Quaternion maxRightRot = Quaternion.Euler(0f, -60f, 0f);
     private Quaternion maxLeftRot = Quaternion.Euler(0f, 60f, 0f);
@@ -24,6 +24,7 @@ public class Catapult : NetworkBehaviour
     private float catapult_reel = 20f;
     private readonly float catapultRotStep = 1.0f;
     private readonly float multiplierStep = 0.01f;
+    private bool firstSpawn = true;
     
 
     // Start is called before the first frame update
@@ -35,7 +36,7 @@ public class Catapult : NetworkBehaviour
             maxRightRot *= Quaternion.Euler(0f, 180f, 0f);
             maxLeftRot *= Quaternion.Euler(0f, 180f, 0f);
         }
-        CmdSpawnBall();
+        // CmdSpawnBall();
      //   UpdateTutorialText();
     }
 
@@ -93,6 +94,10 @@ public class Catapult : NetworkBehaviour
         if (!hasAuthority)
         {
             return;
+        }
+        if (firstSpawn) {
+            CmdReel();
+            firstSpawn = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
