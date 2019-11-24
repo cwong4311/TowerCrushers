@@ -38,6 +38,7 @@ public class PlayerController : NetworkBehaviour
 
     private bool buildable = false;
     private bool controlHelpActive = false;
+    private bool tutorialPlayed = false;
 
     private readonly float multiplierStep = 0.01f;
 
@@ -392,6 +393,12 @@ public class PlayerController : NetworkBehaviour
             currCam.transform.position = new Vector3(178.2f, 66.5f, 365.6f);
             currCam.transform.rotation = Quaternion.Euler(90f, 90f, 180f);
         }
+
+        // Show tutorial if practice mode
+        if (gameState.GetComponent<Main>().mode == Modes.SINGLE && !tutorialPlayed) {
+            buildCanvas.transform.Find("Tutorial1").gameObject.SetActive(true);
+            tutorialPlayed = true;
+        }
     }
 
     /*
@@ -441,6 +448,12 @@ public class PlayerController : NetworkBehaviour
             // p2 play cam
             currCam.transform.position = new Vector3(208.85f, 15f, 365f);
             currCam.transform.rotation = Quaternion.Euler(14f, 270f, 0f);
+        }        
+        
+        // Show tutorial if practice mode
+        if (gameState.GetComponent<Main>().mode == Modes.SINGLE && tutorialPlayed) {
+            playCanvas.transform.Find("Tutorial2").gameObject.SetActive(true);
+            tutorialPlayed = false;
         }
     }
 

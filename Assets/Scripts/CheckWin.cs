@@ -17,7 +17,7 @@ public class CheckWin : MonoBehaviour
             int p1_towers = gameState.GetComponent<Main>().p1_towerNum;
             int p2_towers = gameState.GetComponent<Main>().p2_towerNum;
 
-            var winner = (p1_towers > p2_towers) ? "PLAYER 1" : "PLAYER 2";
+            var winner = (p1_towers >= p2_towers) ? "PLAYER 1" : "PLAYER 2";
             transform.Find("Text").GetComponent<Text>().text = winner + " WINS!";
 
             //mainMenu.GetComponent<MainMenu>().Disconnect();
